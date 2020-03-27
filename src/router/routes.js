@@ -19,6 +19,7 @@ import PageView from '../layout/PageView'
 import WelcomeView from '../layout/WelcomeView'
 
 import UserList from '../pages/user/UserList'
+import UserAdd from '../pages/user/UserAdd'
 
 import Result404 from '../pages/results/404'
 
@@ -68,6 +69,10 @@ export default new VueRouter({
               path: '/user/userList',
               name: '员工列表',
               component: UserList
+            }, {
+              path: '/user/userAdd',
+              name: '增加员工',
+              component: UserAdd
             }
           ]
         }, {

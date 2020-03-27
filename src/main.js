@@ -1,7 +1,8 @@
 import {
   AutoComplete, Breadcrumb, Card,
   Checkbox, Form, Icon, Input, Menu, Select, Layout, Dropdown,
-  Avatar, Button, Badge, Tooltip, PageHeader, Descriptions, List, Table, Alert, DatePicker, Result
+  Avatar, Button, Badge, Tooltip, PageHeader, Descriptions, List,
+  Table, Alert, DatePicker, Result, Cascader
 } from 'ant-design-vue';
 import Vue from 'vue';
 import App from './App.vue';
@@ -35,6 +36,7 @@ Vue.use(Table);
 Vue.use(Alert);
 Vue.use(DatePicker);
 Vue.use(Result);
+Vue.use(Cascader);
 
 new Vue({
   el: '#app',

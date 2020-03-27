@@ -38,5 +38,7 @@ const users = [
 export default {
   getUsers() {
     return users;
+  }, addUser(user) {
+    console.log(user);
   }
 }

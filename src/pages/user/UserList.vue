@@ -1,7 +1,9 @@
 <template>
-   <div class="table-padding">
+  <div class="table-padding">
     <div class="table-operators">
-      <a-button type="primary">新增</a-button>
+      <router-link :to="{name:'增加员工'}">
+        <a-button type="primary">新增</a-button>
+      </router-link>
       <a-button :style="{ marginLeft: '24px' }">删除</a-button>
     </div>
     <standard-table
@@ -15,7 +17,7 @@
 </template>
 
 <script>
-import UserDAO from '../../dao/userDAO'
+import UserDAO from "../../dao/userDAO";
 import StandardTable from "../../components/table/StandardTable";
 
 const columns = [
@@ -48,7 +50,7 @@ export default {
       selectedRows: []
     };
   },
-  mounted(){
+  mounted() {
     this.dataSource = UserDAO.getUsers();
   },
   methods: {
@@ -56,5 +58,5 @@ export default {
       this.selectedRows = selectedRows;
     }
   }
-}
+};
 </script>
