@@ -53,10 +53,13 @@
           <a-icon type="pay-circle" />费用
         </span>
       </a-sub-menu>
-      <a-sub-menu>
+      <a-sub-menu key="user">
         <span slot="title">
           <a-icon type="idcard" />员工管理
         </span>
+        <a-menu-item key="userList">
+          <router-link :to="{name:'员工列表'}">员工列表</router-link>
+        </a-menu-item>
       </a-sub-menu>
     </a-menu>
   </a-layout-sider>

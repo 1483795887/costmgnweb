@@ -89,13 +89,3 @@ export default {
   }
 };
 </script>
-
-<style scoped>
-.mytable {
-  padding: 24px;
-}
-.tableButtons {
-  display: flex;
-  padding-bottom: 18px;
-}
-</style>

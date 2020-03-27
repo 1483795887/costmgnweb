@@ -18,6 +18,10 @@ import ContractInfo from '../pages/contract/ContractInfo'
 import PageView from '../layout/PageView'
 import WelcomeView from '../layout/WelcomeView'
 
+import UserList from '../pages/user/UserList'
+
+import Result404 from '../pages/results/404'
+
 Vue.use(VueRouter);
 
 export default new VueRouter({
@@ -60,6 +64,10 @@ export default new VueRouter({
               path: '/user/changePassword',
               name: '修改密码',
               component: UpdatePassword
+            }, {
+              path: '/user/userList',
+              name: '员工列表',
+              component: UserList
             }
           ]
         }, {
@@ -71,7 +79,7 @@ export default new VueRouter({
               path: '/plan/planManage',
               name: '方案维护',
               component: PlanManage
-            },{
+            }, {
               path: '/plan/planAudit',
               name: '方案审计',
               component: PlanAudit
@@ -83,13 +91,13 @@ export default new VueRouter({
               path: '/plan/planForm/:id',
               name: '方案表格',
               component: PlanForm
-            },{
+            }, {
               path: '/plan/planAdd',
               name: '新增方案',
               component: PlanForm
-            },{
-              path:'/plan/planInfo/:id',
-              name:'方案详情',
+            }, {
+              path: '/plan/planInfo/:id',
+              name: '方案详情',
               component: PlanInfo
             }, {
               path: '/plan/planAdd',
@@ -118,14 +126,18 @@ export default new VueRouter({
               path: '/contract/contractForm/:id',
               name: '合同表格',
               component: ContractForm
-            },{
-              path:'/contract/contractInfo/:id',
-              name:'合同详情',
+            }, {
+              path: '/contract/contractInfo/:id',
+              name: '合同详情',
               component: ContractInfo
             }
           ]
         }
       ]
+    }, {
+      path: "*",
+      name: "404",
+      component: Result404
     }
   ]
 })
