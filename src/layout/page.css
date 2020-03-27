@@ -1,0 +1,12 @@
+.page-layout{
+  margin:0px -24px;
+  background: white;
+}
+.page-header {
+  padding:16px 32px 0;
+  border: 1px solid rgb(235, 237, 240);
+}
+.page-content {
+  border: 1px solid rgb(235, 237, 240);
+  margin: 24px 24px;
+}
