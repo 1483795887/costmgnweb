@@ -22,12 +22,6 @@ const columns = [
     scopedSlots: { customRender: "planId" }
   },
   {
-    title: "提交时间",
-    dataIndex: "work.date",
-    defaultSortOrder: "descend",
-    sorter: (a, b) => a.date > b.date
-  },
-  {
     title: "提交人姓名",
     dataIndex: "work.user.name"
   },
@@ -36,8 +30,10 @@ const columns = [
     dataIndex: "work.user.department"
   },
   {
-    title: "状态",
-    dataIndex: "work.status"
+    title: "提交时间",
+    dataIndex: "work.date",
+    defaultSortOrder: "descend",
+    sorter: (a, b) => a.date > b.date
   }
 ];
 

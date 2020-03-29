@@ -22,7 +22,6 @@ import BudgetManage from '../pages/budget/BudgetManage'
 import BudgetView from '../pages/budget/BudgetView'
 import BudgetAudit from '../pages/budget/BudgetAudit'
 import BudgetForm from '../pages/budget/BudgetForm'
-import BudgetInfo from '../pages/budget/BudgetInfo'
 
 import UserList from '../pages/user/UserList'
 import UserAdd from '../pages/user/UserAdd'
@@ -168,10 +167,6 @@ const router =  new VueRouter({
               path: '/budget/budgetAdd',
               name: '新增预算',
               component: BudgetForm
-            }, {
-              path: '/budget/budgetInfo/:id',
-              name: '预算详情',
-              component: BudgetInfo
             }, {
               path: '/budget/budgetAdd',
               name: '新增预算',

@@ -8,7 +8,8 @@ const budget1 = {
   type: '营销',
   work: {
     user: UserData.getUsers()[0],
-    status: '未通过'
+    status: '未通过',
+    date:'2020-02-04'
   }
 }
 
@@ -20,7 +21,8 @@ const budget2 = {
   type: '工资',
   work: {
     user: UserData.getUsers()[1],
-    status: '已通过'
+    status: '已通过',
+    date:'2020-02-04'
   }
 }
 
@@ -32,7 +34,8 @@ const budget3 = {
   type: '销售',
   work: {
     user: UserData.getUsers()[2],
-    status: '未通过'
+    status: '未通过',
+    date:'2020-02-04'
   }
 }
 

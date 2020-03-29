@@ -38,6 +38,12 @@ const columns = [
   },{
     title:"负责人",
     dataIndex:"work.user.name"
+  },
+  {
+    title: "提交时间",
+    dataIndex: "work.date",
+    defaultSortOrder: "descend",
+    sorter: (a, b) => a.date > b.date
   }
 ];
 
@@ -53,7 +59,8 @@ const contracts = [
         name: "张三",
         department: "生产"
       },
-      status: "已完成"
+      status: "已完成",
+      date:'2020-02-04'
     }
   },
   {
@@ -67,7 +74,8 @@ const contracts = [
         name: "张三",
         department: "生产"
       },
-      status: "已完成"
+      status: "已完成",
+      date:'2020-02-04'
     }
   }
 ];

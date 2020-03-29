@@ -1,12 +1,6 @@
 <template>
   <div class="table-padding">
-    <a-table :columns="columns" :dataSource="dataSource" :rowKey="record => record.id">
-      <router-link
-        slot="budgetId"
-        slot-scope="text,record"
-        :to="{name:'预算详情',params:{id:record.id}}"
-      >{{text}}</router-link>
-    </a-table>
+    <a-table :columns="columns" :dataSource="dataSource" :rowKey="record => record.id"/>
   </div>
 </template>
 
@@ -14,8 +8,7 @@
 const columns = [
   {
     title: "预算编号",
-    dataIndex: "id",
-    scopedSlots: { customRender: "budgetId" }
+    dataIndex: "id"
   },
   {
     title: "年度",
@@ -45,6 +38,12 @@ const columns = [
   {
     title: "负责人",
     dataIndex: "work.user.name"
+  },
+  {
+    title: "提交时间",
+    dataIndex: "work.date",
+    defaultSortOrder: "descend",
+    sorter: (a, b) => a.date > b.date
   }
 ];
 import BudgetData from '../../dao/budgetDAO'
