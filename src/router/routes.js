@@ -25,7 +25,7 @@ import Result404 from '../pages/results/404'
 
 Vue.use(VueRouter);
 
-export default new VueRouter({
+const router =  new VueRouter({
   mode: 'history',
   base: __dirname,
   linkActiveClass: "active",
@@ -140,9 +140,19 @@ export default new VueRouter({
         }
       ]
     }, {
-      path: "*",
+      path: "/error/404",
       name: "404",
       component: Result404
     }
   ]
 })
+
+router.beforeEach((to,from,next)=>{
+  if(to.matched.length!=0){
+    next();
+  }else{
+    next({name:'404'})
+  }
+})
+
+export default router;
