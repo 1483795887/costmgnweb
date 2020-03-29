@@ -7,10 +7,9 @@
 </template>
 
 <script>
-import HeaderNotive from "./HeaderNotive";
 import HeaderAvatar from "./HeaderAvatar";
 export default {
-  components: { HeaderNotive, HeaderAvatar }
+  components: { HeaderAvatar }
 };
 </script>
 

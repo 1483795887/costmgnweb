@@ -90,7 +90,7 @@ export default new VueRouter({
               component: PlanAudit
             }, {
               path: '/plan/planView',
-              name: '查看历史方案',
+              name: '查看方案',
               component: PlanView
             }, {
               path: '/plan/planForm/:id',
@@ -125,7 +125,7 @@ export default new VueRouter({
               component: ContractAudit
             }, {
               path: '/contract/contractView',
-              name: '查看历史合同',
+              name: '查看合同',
               component: ContractView
             }, {
               path: '/contract/contractForm/:id',

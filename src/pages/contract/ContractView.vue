@@ -75,7 +75,7 @@ const contracts = [
 export default {
   data() {
     return {
-      desc: "查看已完成的合同",
+      desc: "查看合同列表",
       columns: columns,
       dataSource: contracts,
       selectedRows: []

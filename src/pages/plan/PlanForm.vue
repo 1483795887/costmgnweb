@@ -18,7 +18,7 @@
 
 <script>
 import PlanDAO from "../../dao/planDAO";
-import { formatDate, getToday } from '../../common/Date';
+import { formatDate, getToday } from "../../common/Date";
 
 export default {
   data() {
@@ -30,13 +30,15 @@ export default {
   mounted() {
     this.desc = this.$route.params.desc;
     this.plan = this.getPlan(this.$route.params.id);
-    if(this.plan == null){
-      this.plan = {}
-      this.plan.work={}
+    if (this.plan == null) {
+      this.plan = {};
+      this.plan.work = {};
       this.plan.work.user = this.$store.state.account.user;
       this.plan.work.date = formatDate(getToday());
     }
-    this.form.setFieldsValue(this.plan);
+    this.$nextTick(() => {
+      this.form.setFieldsValue(this.plan);
+    });
   },
   beforeCreate() {
     this.form = this.$form.createForm(this, { name: "plan-form" });

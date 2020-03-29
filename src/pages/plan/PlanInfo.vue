@@ -1,5 +1,5 @@
 <template>
-  <a-form :form="form" :label-col="{ span: 5 }" :wrapper-col="{ span: 12 }" @submit="handleSubmit">
+  <a-form :label-col="{ span: 5 }" :wrapper-col="{ span: 12 }">
     <a-form-item label="方案名">
       {{plan.title}}
     </a-form-item>
@@ -28,9 +28,6 @@ export default {
   },
   mounted() {
     this.plan = this.getPlan(this.$route.params.id);
-  },
-  beforeCreate() {
-    this.form = this.$form.createForm(this, { name: "plan-form" });
   },
   methods: {
     getPlan(id){

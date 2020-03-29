@@ -9,7 +9,6 @@
 </template>
 
 <script>
-import StandardTable from "../../components/table/StandardTable";
 
 const works = [
   {
@@ -44,14 +43,12 @@ const columns = [
   {
     title: "提交时间",
     dataIndex: "date",
-    sorter: true,
     defaultSortOrder: "descend",
     sorter: (a, b) => a.date > b.date
   }
 ];
 
 export default {
-  components: { StandardTable },
   data() {
     return {
       dataSource: works,

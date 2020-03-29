@@ -31,7 +31,7 @@
           <router-link :to="{name:'方案审计'}">方案审计</router-link>
         </a-menu-item>
         <a-menu-item key="planView">
-          <router-link :to="{name:'查看历史方案'}">查看历史方案</router-link>
+          <router-link :to="{name:'查看方案'}">查看方案</router-link>
         </a-menu-item>
       </a-sub-menu>
       <a-sub-menu key="contract">
@@ -45,13 +45,30 @@
           <router-link :to="{name:'合同审计'}">合同审计</router-link>
         </a-menu-item>
         <a-menu-item key="contractView">
-          <router-link :to="{name:'查看历史合同'}">查看历史合同</router-link>
+          <router-link :to="{name:'查看合同'}">查看合同</router-link>
         </a-menu-item>
       </a-sub-menu>
-      <a-sub-menu>
+      <a-sub-menu key="budget">
         <span slot="title">
-          <a-icon type="pay-circle" />费用
+          <a-icon type="account-book" />预算
         </span>
+        <a-menu-item key="budgetManage">
+          <router-link :to="{name:'预算维护'}">预算维护</router-link>
+        </a-menu-item>
+        <a-menu-item key="budgetAudit">
+          <router-link :to="{name:'预算审计'}">预算审计</router-link>
+        </a-menu-item>
+        <a-menu-item key="budgetView">
+          <router-link :to="{name:'查看预算'}">查看预算</router-link>
+        </a-menu-item>
+      </a-sub-menu>
+      <a-sub-menu key="cost">
+        <span slot="title">
+          <a-icon type="transaction" />费用
+        </span>
+        <a-menu-item key="costView">
+          <router-link :to="{name:'费用列表'}">费用列表</router-link>
+        </a-menu-item>
       </a-sub-menu>
       <a-sub-menu key="user">
         <span slot="title">
@@ -66,7 +83,6 @@
 </template>
 
 <script>
-//之后弄个vuex保存一下菜单选择，刷新时保存
 export default {
   computed: {
     openKeys() {

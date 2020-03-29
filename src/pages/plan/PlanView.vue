@@ -71,7 +71,7 @@ const plans = [
 export default {
   data() {
     return {
-      desc: "查看已完成的方案",
+      desc: "查看方案列表",
       columns: columns,
       dataSource: plans,
       selectedRows: []

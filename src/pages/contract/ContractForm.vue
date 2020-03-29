@@ -4,14 +4,13 @@
       <a-input v-decorator="['no', { rules: [{ required: true, message: '请输入合同编号!' }] }]" />
     </a-form-item>
     <a-form-item label="方案编号">
-       <a-select v-decorator="['planId', { rules: [{ required: true, message: '请选择方案编号!' }]}]">
-         <a-select-option
-        v-for="(item,key) in plans"
-        :key="key"
-        :value="item.id"
-      >{{item.id+":"+item.title}}</a-select-option>
-       </a-select>
-      
+      <a-select v-decorator="['planId', { rules: [{ required: true, message: '请选择方案编号!' }]}]">
+        <a-select-option
+          v-for="(item,key) in plans"
+          :key="key"
+          :value="item.id"
+        >{{item.id+":"+item.title}}</a-select-option>
+      </a-select>
     </a-form-item>
     <a-form-item label="合同签署日期">
       <a-date-picker
@@ -68,7 +67,7 @@ import moment from "moment";
 import contractData from "../../common/contract";
 import ContractDAO from "../../dao/contractDAO";
 import PlanDAO from "../../dao/planDAO";
-import { formatDate, getToday } from "../../common/Date"
+import { formatDate, getToday } from "../../common/Date";
 
 export default {
   data() {
@@ -83,13 +82,14 @@ export default {
   },
   mounted() {
     this.desc = this.$route.params.desc;
+
     this.contract = this.getContract(this.$route.params.id);
     if (this.contract == null) {
       this.contract = {};
       this.contract.payMethod = contractData.payMethods.PAY_METHOD_CASH;
       this.contract.payRequest = contractData.payRequests.PAY_REQUEST_ONCE;
       this.contract.money = 0;
-      this.contract.work={};
+      this.contract.work = {};
       this.contract.work.user = this.getCurrentUser();
       this.contract.work.status = "未提交";
       this.contract.work.date = formatDate(getToday());
@@ -99,7 +99,9 @@ export default {
         this.dateFormat
       );
     }
-    this.form.setFieldsValue(this.contract);
+    this.$nextTick(() => {
+      this.form.setFieldsValue(this.contract);
+    });
   },
   beforeCreate() {
     this.form = this.$form.createForm(this, { name: "plan-form" });
@@ -120,7 +122,7 @@ export default {
         }
       });
     },
-    getCurrentUser(){
+    getCurrentUser() {
       return this.$store.state.account.user;
     },
     getContract(id) {
