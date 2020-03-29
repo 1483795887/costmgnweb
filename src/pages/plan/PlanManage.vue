@@ -78,14 +78,8 @@ export default {
     return {
       desc: "维护正在进行的方案",
       columns: columns,
-      dataSource: plans,
-      selectedRows: []
+      dataSource: plans
     };
-  },
-  methods: {
-    onchange(selectedRowKeys, selectedRows) {
-      this.selectedRows = selectedRows;
-    }
   }
 };
 </script>

@@ -79,14 +79,8 @@ export default {
     return {
       desc: "维护正在进行的合同",
       columns: columns,
-      dataSource: contracts,
-      selectedRows: []
+      dataSource: contracts
     };
-  },
-  methods: {
-    onchange(selectedRowKeys, selectedRows) {
-      this.selectedRows = selectedRows;
-    }
   }
 };
 </script>

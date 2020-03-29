@@ -1,16 +1,26 @@
 <template>
   <div class="table-padding">
-    <a-table :columns="columns" :dataSource="dataSource" :rowKey="record => record.id">
-      <router-link
-        slot="contractId"
-        slot-scope="text,record"
-        :to="{name:'合同详情',params:{id:record.id}}"
-      >{{text}}</router-link>
-    </a-table>
+    <div class="table-operators">
+      <a-button type="primary">批准</a-button>
+      <a-button :style="{ marginLeft: '24px' }">退回</a-button>
+    </div>
+    <standard-table
+      :columns="columns"
+      :dataSource="dataSource"
+      :selectedRows="selectedRows"
+      @change="onchange"
+      :rowKey="record => record.id"
+    >
+      <template slot="contractId" slot-scope="{text,record}">
+        <router-link :to="{name:'合同详情',params:{id:record.id}}">{{text}}</router-link>
+      </template>
+    </standard-table>
   </div>
 </template>
 
 <script>
+import StandardTable from "../../components/table/StandardTable";
+
 const columns = [
   {
     title: "合同编号",
@@ -35,9 +45,10 @@ const columns = [
   {
     title: "部门",
     dataIndex: "work.user.department"
-  },{
-    title:"负责人",
-    dataIndex:"work.user.name"
+  },
+  {
+    title: "负责人",
+    dataIndex: "work.user.name"
   }
 ];
 
@@ -47,7 +58,7 @@ const contracts = [
     no: "20200302001",
     contractDate: "2020-02-01",
     company: "A公司",
-    money:123456,
+    money: 123456,
     work: {
       user: {
         name: "张三",
@@ -61,7 +72,7 @@ const contracts = [
     no: "20200302002",
     contractDate: "2020-02-02",
     company: "B公司",
-    money:78456156,
+    money: 78456156,
     work: {
       user: {
         name: "张三",
@@ -73,12 +84,21 @@ const contracts = [
 ];
 
 export default {
+  components: {
+    StandardTable
+  },
   data() {
     return {
-      desc: "查看合同列表",
+      desc: "审计正在进行的合同",
       columns: columns,
-      dataSource: contracts
+      dataSource: contracts,
+      selectedRows: []
     };
+  },
+  methods: {
+    onchange(selectedRowKeys, selectedRows) {
+      this.selectedRows = selectedRows;
+    }
   }
 };
 </script>

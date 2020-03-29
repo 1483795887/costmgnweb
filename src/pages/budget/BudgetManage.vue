@@ -1,10 +1,15 @@
 <template>
   <div class="table-padding">
+    <div class="table-operators">
+      <router-link :to="{name:'新增合同',params:{desc:'新增合同'}}">
+        <a-button type="primary">新增</a-button>
+      </router-link>
+    </div>
     <a-table :columns="columns" :dataSource="dataSource" :rowKey="record => record.id">
       <router-link
         slot="contractId"
         slot-scope="text,record"
-        :to="{name:'合同详情',params:{id:record.id}}"
+        :to="{name:'合同表格',params:{desc:'维护合同',id:record.id}}"
       >{{text}}</router-link>
     </a-table>
   </div>
@@ -33,11 +38,8 @@ const columns = [
     customRender: text => text + "元"
   },
   {
-    title: "部门",
-    dataIndex: "work.user.department"
-  },{
-    title:"负责人",
-    dataIndex:"work.user.name"
+    title: "状态",
+    dataIndex: "work.status"
   }
 ];
 
@@ -47,13 +49,13 @@ const contracts = [
     no: "20200302001",
     contractDate: "2020-02-01",
     company: "A公司",
-    money:123456,
+    money: 123456,
     work: {
       user: {
         name: "张三",
         department: "生产"
       },
-      status: "已完成"
+      status: "未提交"
     }
   },
   {
@@ -61,13 +63,13 @@ const contracts = [
     no: "20200302002",
     contractDate: "2020-02-02",
     company: "B公司",
-    money:78456156,
+    money: 78456156,
     work: {
       user: {
         name: "张三",
         department: "生产"
       },
-      status: "已完成"
+      status: "退回"
     }
   }
 ];
@@ -75,10 +77,16 @@ const contracts = [
 export default {
   data() {
     return {
-      desc: "查看合同列表",
+      desc: "维护正在进行的合同",
       columns: columns,
-      dataSource: contracts
+      dataSource: contracts,
+      selectedRows: []
     };
+  },
+  methods: {
+    onchange(selectedRowKeys, selectedRows) {
+      this.selectedRows = selectedRows;
+    }
   }
 };
 </script>

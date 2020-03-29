@@ -18,6 +18,12 @@ import ContractInfo from '../pages/contract/ContractInfo'
 import PageView from '../layout/PageView'
 import WelcomeView from '../layout/WelcomeView'
 
+import BudgetManage from '../pages/budget/BudgetManage'
+import BudgetView from '../pages/budget/BudgetView'
+import BudgetAudit from '../pages/budget/BudgetAudit'
+import BudgetForm from '../pages/budget/BudgetForm'
+import BudgetInfo from '../pages/budget/BudgetInfo'
+
 import UserList from '../pages/user/UserList'
 import UserAdd from '../pages/user/UserAdd'
 
@@ -135,6 +141,41 @@ const router =  new VueRouter({
               path: '/contract/contractInfo/:id',
               name: '合同详情',
               component: ContractInfo
+            }
+          ]
+        }, {
+          path: '/budget',
+          name: '预算',
+          component: PageView,
+          children: [
+            {
+              path: '/budget/budgetManage',
+              name: '预算维护',
+              component: BudgetManage
+            }, {
+              path: '/budget/budgetAudit',
+              name: '预算审计',
+              component: BudgetAudit
+            }, {
+              path: '/budget/budgetView',
+              name: '查看预算',
+              component: BudgetView
+            }, {
+              path: '/budget/budgetForm/:id',
+              name: '预算表格',
+              component: BudgetForm
+            }, {
+              path: '/budget/budgetAdd',
+              name: '新增预算',
+              component: BudgetForm
+            }, {
+              path: '/budget/budgetInfo/:id',
+              name: '预算详情',
+              component: BudgetInfo
+            }, {
+              path: '/budget/budgetAdd',
+              name: '新增预算',
+              component: BudgetForm
             }
           ]
         }

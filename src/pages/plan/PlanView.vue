@@ -73,14 +73,8 @@ export default {
     return {
       desc: "查看方案列表",
       columns: columns,
-      dataSource: plans,
-      selectedRows: []
+      dataSource: plans
     };
-  },
-  methods: {
-    onchange(selectedRowKeys, selectedRows) {
-      this.selectedRows = selectedRows;
-    }
   }
 };
 </script>
