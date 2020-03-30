@@ -64,8 +64,7 @@ export default {
       return null
     else
       return plan1;
-  }, getPlans(user) {
-    if(user!=null)
+  }, getPlans() {
       return plans;
   }
 }

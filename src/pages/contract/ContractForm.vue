@@ -44,7 +44,7 @@
       />
     </a-form-item>
     <a-form-item label="公司名">
-      <a-input v-decorator="['companyName', { rules: [{ required: true, message: '请输入公司名!' }] }]" />
+      <a-input v-decorator="['company', { rules: [{ required: true, message: '请输入公司名!' }] }]" />
     </a-form-item>
     <a-form-item label="法人">
       <a-input v-decorator="['legalPerson', { rules: [{ required: true, message: '请输入法人名!' }] }]" />

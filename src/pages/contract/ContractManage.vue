@@ -40,47 +40,27 @@ const columns = [
   {
     title: "状态",
     dataIndex: "work.status"
+  },
+  {
+    title: "提交时间",
+    dataIndex: "work.date",
+    defaultSortOrder: "descend",
+    sorter: (a, b) => a.date > b.date
   }
 ];
 
-const contracts = [
-  {
-    id: 1,
-    no: "20200302001",
-    contractDate: "2020-02-01",
-    company: "A公司",
-    money: 123456,
-    work: {
-      user: {
-        name: "张三",
-        department: "生产"
-      },
-      status: "未提交"
-    }
-  },
-  {
-    id: 2,
-    no: "20200302002",
-    contractDate: "2020-02-02",
-    company: "B公司",
-    money: 78456156,
-    work: {
-      user: {
-        name: "张三",
-        department: "生产"
-      },
-      status: "退回"
-    }
-  }
-];
+import ContractData from "../../dao/contractDAO";
 
 export default {
   data() {
     return {
       desc: "维护正在进行的合同",
       columns: columns,
-      dataSource: contracts
+      dataSource: []
     };
+  },
+  mounted() {
+    this.dataSource = ContractData.getContracts();
   }
 };
 </script>

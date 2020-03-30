@@ -167,10 +167,6 @@ const router =  new VueRouter({
               path: '/budget/budgetAdd',
               name: '新增预算',
               component: BudgetForm
-            }, {
-              path: '/budget/budgetAdd',
-              name: '新增预算',
-              component: BudgetForm
             }
           ]
         }

@@ -5,7 +5,7 @@
         slot="planId"
         slot-scope="text,record"
         :to="{name:'方案详情',params:{id:record.id}}"
-      >{{text}}</router-link>
+      >{{(Array(8).join('0') + record.id).slice(-8)}}</router-link>
     </a-table>
   </div>
 </template>
@@ -14,12 +14,12 @@
 const columns = [
   {
     title: "方案编号",
-    dataIndex: "id"
+    dataIndex: "id",
+    scopedSlots: { customRender: "planId" }
   },
   {
     title: "方案名",
-    dataIndex: "title",
-    scopedSlots: { customRender: "planId" }
+    dataIndex: "title"
   },
   {
     title: "提交人姓名",
@@ -37,40 +37,17 @@ const columns = [
   }
 ];
 
-const plans = [
-  {
-    id: 1,
-    title: "方案1",
-    work: {
-      user: {
-        name: "张三",
-        department: "生产"
-      },
-      date: "2020-02-01",
-      status: "已完成"
-    }
-  },
-  {
-    id: 2,
-    title: "方案2",
-    work: {
-      user: {
-        name: "李四",
-        department: "营销"
-      },
-      date: "2020-02-03",
-      status: "已完成"
-    }
-  }
-];
+import PlanData from '../../dao/planDAO'
 
 export default {
   data() {
     return {
       desc: "查看方案列表",
       columns: columns,
-      dataSource: plans
+      dataSource: []
     };
+  },mounted(){
+    this.dataSource = PlanData.getPlans();
   }
 };
 </script>

@@ -23,7 +23,8 @@ import StandardTable from "../../components/table/StandardTable";
 const columns = [
   {
     title: "员工编号",
-    dataIndex: "userid"
+    dataIndex: "id",
+    customRender: (text,record) =>(Array(8).join('0') + record.id).slice(-8)
   },
   {
     title: "姓名",

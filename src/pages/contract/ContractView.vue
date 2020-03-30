@@ -35,9 +35,10 @@ const columns = [
   {
     title: "部门",
     dataIndex: "work.user.department"
-  },{
-    title:"负责人",
-    dataIndex:"work.user.name"
+  },
+  {
+    title: "负责人",
+    dataIndex: "work.user.name"
   },
   {
     title: "提交时间",
@@ -47,46 +48,18 @@ const columns = [
   }
 ];
 
-const contracts = [
-  {
-    id: 1,
-    no: "20200302001",
-    contractDate: "2020-02-01",
-    company: "A公司",
-    money:123456,
-    work: {
-      user: {
-        name: "张三",
-        department: "生产"
-      },
-      status: "已完成",
-      date:'2020-02-04'
-    }
-  },
-  {
-    id: 2,
-    no: "20200302002",
-    contractDate: "2020-02-02",
-    company: "B公司",
-    money:78456156,
-    work: {
-      user: {
-        name: "张三",
-        department: "生产"
-      },
-      status: "已完成",
-      date:'2020-02-04'
-    }
-  }
-];
+import ContractData from "../../dao/contractDAO";
 
 export default {
   data() {
     return {
       desc: "查看合同列表",
       columns: columns,
-      dataSource: contracts
+      dataSource: []
     };
+  },
+  mounted() {
+    this.dataSource = ContractData.getContracts();
   }
 };
 </script>

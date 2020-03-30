@@ -1,16 +1,16 @@
 <template>
   <div class="table-padding">
     <div class="table-operators">
-      <router-link :to="{name:'新增合同',params:{desc:'新增合同'}}">
+      <router-link :to="{name:'新增预算',params:{desc:'新增预算'}}">
         <a-button type="primary">新增</a-button>
       </router-link>
     </div>
     <a-table :columns="columns" :dataSource="dataSource" :rowKey="record => record.id">
       <router-link
-        slot="contractId"
+        slot="budgetId"
         slot-scope="text,record"
-        :to="{name:'合同表格',params:{desc:'维护合同',id:record.id}}"
-      >{{text}}</router-link>
+        :to="{name:'预算表格',params:{desc:'维护预算',id:record.id}}"
+      >{{(Array(8).join('0') + record.id).slice(-8)}}</router-link>
     </a-table>
   </div>
 </template>
@@ -18,19 +18,21 @@
 <script>
 const columns = [
   {
-    title: "合同编号",
-    dataIndex: "no",
-    scopedSlots: { customRender: "contractId" }
+    title: "预算编号",
+    dataIndex: "id",
+    scopedSlots: { customRender: "budgetId" }
   },
   {
-    title: "公司名",
-    dataIndex: "company"
-  },
-  {
-    title: "合同签订日期",
-    dataIndex: "contractDate",
+    title: "年度",
+    dataIndex: "year",
     defaultSortOrder: "descend",
-    sorter: (a, b) => a.date > b.date
+    sorter: (a, b) => a.year > b.year
+  },
+  {
+    title: "月份",
+    dataIndex: "month",
+    defaultSortOrder: "descend",
+    sorter: (a, b) => a.month > b.month
   },
   {
     title: "金额",
@@ -38,55 +40,33 @@ const columns = [
     customRender: text => text + "元"
   },
   {
+    title: "用途",
+    dataIndex: "type"
+  },
+  {
     title: "状态",
     dataIndex: "work.status"
+  },
+  {
+    title: "提交时间",
+    dataIndex: "work.date",
+    defaultSortOrder: "descend",
+    sorter: (a, b) => a.date > b.date
   }
 ];
 
-const contracts = [
-  {
-    id: 1,
-    no: "20200302001",
-    contractDate: "2020-02-01",
-    company: "A公司",
-    money: 123456,
-    work: {
-      user: {
-        name: "张三",
-        department: "生产"
-      },
-      status: "未提交"
-    }
-  },
-  {
-    id: 2,
-    no: "20200302002",
-    contractDate: "2020-02-02",
-    company: "B公司",
-    money: 78456156,
-    work: {
-      user: {
-        name: "张三",
-        department: "生产"
-      },
-      status: "退回"
-    }
-  }
-];
+import BudgetData from '../../dao/budgetDAO'
 
 export default {
   data() {
     return {
-      desc: "维护正在进行的合同",
+      desc: "维护正在进行的预算",
       columns: columns,
-      dataSource: contracts,
+      dataSource: [],
       selectedRows: []
     };
-  },
-  methods: {
-    onchange(selectedRowKeys, selectedRows) {
-      this.selectedRows = selectedRows;
-    }
+  },mounted(){
+    this.dataSource = BudgetData.getBudgets();
   }
 };
 </script>

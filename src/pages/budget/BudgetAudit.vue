@@ -10,37 +10,45 @@
       :selectedRows="selectedRows"
       @change="onchange"
       :rowKey="record => record.id"
-    >
-      <template slot="contractId" slot-scope="{text,record}">
-        <router-link :to="{name:'合同详情',params:{id:record.id}}">{{text}}</router-link>
-      </template>
-    </standard-table>
+    />
   </div>
 </template>
 
 <script>
 import StandardTable from "../../components/table/StandardTable";
+import BudgetData from '../../dao/budgetDAO'
+
 
 const columns = [
   {
-    title: "合同编号",
-    dataIndex: "no",
-    scopedSlots: { customRender: "contractId" }
+    title: "预算编号",
+    dataIndex: "id",
+    customRender: (text,record) =>(Array(8).join('0') + record.id).slice(-8)
   },
   {
-    title: "公司名",
-    dataIndex: "company"
-  },
-  {
-    title: "合同签订日期",
-    dataIndex: "contractDate",
+    title: "年度",
+    dataIndex: "year",
     defaultSortOrder: "descend",
-    sorter: (a, b) => a.date > b.date
+    sorter: (a, b) => a.year > b.year
+  },
+  {
+    title: "月份",
+    dataIndex: "month",
+    defaultSortOrder: "descend",
+    sorter: (a, b) => a.month > b.month
   },
   {
     title: "金额",
     dataIndex: "money",
     customRender: text => text + "元"
+  },
+  {
+    title: "用途",
+    dataIndex: "type"
+  },
+  {
+    title: "状态",
+    dataIndex: "work.status"
   },
   {
     title: "部门",
@@ -49,37 +57,12 @@ const columns = [
   {
     title: "负责人",
     dataIndex: "work.user.name"
-  }
-];
-
-const contracts = [
-  {
-    id: 1,
-    no: "20200302001",
-    contractDate: "2020-02-01",
-    company: "A公司",
-    money: 123456,
-    work: {
-      user: {
-        name: "张三",
-        department: "生产"
-      },
-      status: "已完成"
-    }
   },
   {
-    id: 2,
-    no: "20200302002",
-    contractDate: "2020-02-02",
-    company: "B公司",
-    money: 78456156,
-    work: {
-      user: {
-        name: "张三",
-        department: "生产"
-      },
-      status: "已完成"
-    }
+    title: "提交时间",
+    dataIndex: "work.date",
+    defaultSortOrder: "descend",
+    sorter: (a, b) => a.date > b.date
   }
 ];
 
@@ -91,9 +74,12 @@ export default {
     return {
       desc: "审计正在进行的合同",
       columns: columns,
-      dataSource: contracts,
+      dataSource: [],
       selectedRows: []
     };
+  },
+  mounted(){
+    this.dataSource = BudgetData.getBudgets();
   },
   methods: {
     onchange(selectedRowKeys, selectedRows) {
