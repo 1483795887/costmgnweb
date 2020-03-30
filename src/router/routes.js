@@ -102,16 +102,12 @@ const router =  new VueRouter({
               name: '方案表格',
               component: PlanForm
             }, {
-              path: '/plan/planAdd',
-              name: '新增方案',
-              component: PlanForm
-            }, {
               path: '/plan/planInfo/:id',
               name: '方案详情',
               component: PlanInfo
             }, {
               path: '/plan/planAdd',
-              name: '新增合同',
+              name: '新增方案',
               component: PlanForm
             }
           ]
@@ -140,6 +136,10 @@ const router =  new VueRouter({
               path: '/contract/contractInfo/:id',
               name: '合同详情',
               component: ContractInfo
+            }, {
+              path: '/contract/contractAdd',
+              name: '新增合同',
+              component: ContractForm
             }
           ]
         }, {

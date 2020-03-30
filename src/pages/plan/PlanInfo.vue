@@ -1,11 +1,7 @@
 <template>
   <a-form :label-col="{ span: 5 }" :wrapper-col="{ span: 12 }">
-    <a-form-item label="方案名">
-      {{plan.title}}
-    </a-form-item>
-    <a-form-item label="描述">
-      {{plan.description}}
-    </a-form-item>
+    <a-form-item label="方案名">{{plan.title}}</a-form-item>
+    <a-form-item label="描述">{{plan.description}}</a-form-item>
     <a-form-item label="负责人">{{plan.work.user.name}}</a-form-item>
     <a-form-item label="部门">{{plan.work.user.department}}</a-form-item>
     <a-form-item label="修改时间">{{plan.work.date}}</a-form-item>
@@ -17,23 +13,29 @@
 </template>
 
 <script>
-import PlanDAO from '../../dao/planDAO';
+import PlanDAO from "../../dao/planDAO";
 export default {
   data() {
     return {
       needToBack: true,
       desc: "查看方案信息",
-      plan:{}
+      plan: {
+        work: {
+          user:{
+            
+          }
+        }
+      }
     };
   },
   mounted() {
     this.plan = this.getPlan(this.$route.params.id);
   },
   methods: {
-    getPlan(id){
+    getPlan(id) {
       return PlanDAO.getPlan(id);
     },
-    goBack(){
+    goBack() {
       this.$router.go(-1);
     }
   }

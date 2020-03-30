@@ -50,11 +50,11 @@
       <a-input v-decorator="['legalPerson', { rules: [{ required: true, message: '请输入法人名!' }] }]" />
     </a-form-item>
     <a-form-item label="描述">
-      <a-input v-decorator="['desc']" />
+      <a-input v-decorator="['description']" />
     </a-form-item>
-    <a-form-item label="负责人">{{contract.work.user.name}}</a-form-item>
-    <a-form-item label="部门">{{contract.work.user.department}}</a-form-item>
-    <a-form-item label="修改时间">{{contract.work.date}}</a-form-item>
+    <a-form-item label="负责人">{{user.name}}</a-form-item>
+    <a-form-item label="部门">{{user.department}}</a-form-item>
+    <a-form-item label="修改时间">{{date}}</a-form-item>
     <a-form-item :wrapper-col="{ span: 12, offset: 5 }">
       <a-button type="primary" html-type="submit">保存</a-button>
       <a-button html-type="submit" :style="{ marginLeft: '24px' }">取消</a-button>
@@ -67,7 +67,6 @@ import moment from "moment";
 import contractData from "../../common/contract";
 import ContractDAO from "../../dao/contractDAO";
 import PlanDAO from "../../dao/planDAO";
-import { formatDate, getToday } from "../../common/Date";
 
 export default {
   data() {
@@ -76,31 +75,55 @@ export default {
       installment: false,
       payMethods: contractData.payMethods,
       payRequests: contractData.payRequests,
-      contract: {},
-      dateFormat: "YYYY-MM-DD"
+      dateFormat: "YYYY-MM-DD",
+      no: "",
+      planId: undefined,
+      contractDate: moment(),
+      money: 0,
+      payMethod: contractData.payMethods.PAY_METHOD_CASH,
+      payRequest: contractData.payRequests.PAY_REQUEST_ONCE,
+      lastMonth: 1,
+      company: "",
+      legalPerson: "",
+      description: "",
+      user: {},
+      date: ""
     };
   },
   mounted() {
     this.desc = this.$route.params.desc;
 
-    this.contract = this.getContract(this.$route.params.id);
-    if (this.contract == null) {
-      this.contract = {};
-      this.contract.payMethod = contractData.payMethods.PAY_METHOD_CASH;
-      this.contract.payRequest = contractData.payRequests.PAY_REQUEST_ONCE;
-      this.contract.money = 0;
-      this.contract.work = {};
-      this.contract.work.user = this.getCurrentUser();
-      this.contract.work.status = "未提交";
-      this.contract.work.date = formatDate(getToday());
+    var contract = this.getContract(this.$route.params.id);
+    if (contract != null) {
+      this.user = contract.work.user;
+      this.date = contract.work.date;
+      this.no = contract.no;
+      this.planId = contract.planId;
+      this.contractDate = moment(contract.contractDate, this.dateFormat);
+      this.money = contract.money;
+      this.payMethod = contract.payMethod;
+      this.payRequest = contract.payRequest;
+      this.lastMonth = contract.lastMonth;
+      this.company = contract.company;
+      this.legalPerson = contract.legalPerson;
+      this.description = contract.description;
     } else {
-      this.contract.contractDate = moment(
-        this.contract.contractDate,
-        this.dateFormat
-      );
+      this.user = this.getCurrentUser();
+      this.date = moment().format(this.dateFormat);
     }
     this.$nextTick(() => {
-      this.form.setFieldsValue(this.contract);
+      this.form.setFieldsValue({
+        no: this.no,
+        planId: this.planId,
+        contractDate: this.contractDate,
+        money: this.money,
+        payMethod: this.payMethod,
+        payRequest: this.payRequest,
+        lastMonth: this.lastMonth,
+        company: this.company,
+        legalPerson: this.legalPerson,
+        description: this.description
+      });
     });
   },
   beforeCreate() {
@@ -108,7 +131,7 @@ export default {
   },
   computed: {
     plans() {
-      return PlanDAO.getPlans(this.getCurrentUser());
+      return PlanDAO.getPlans();
     }
   },
   methods: {
@@ -116,9 +139,7 @@ export default {
       e.preventDefault();
       this.form.validateFields(err => {
         if (!err) {
-          var date = this.form.getFieldValue("contractDate");
-          this.contract.contractDate = date.format(this.dateFormat);
-          console.log(this.contract);
+          err;
         }
       });
     },

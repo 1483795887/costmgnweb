@@ -30,7 +30,13 @@ export default {
     return {
       needToBack: true,
       desc: "查看合同信息",
-      contract: {}
+      contract: {
+        work:{
+          user:{
+            
+          }
+        }
+      }
     };
   },
   methods: {
