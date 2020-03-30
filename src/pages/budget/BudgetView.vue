@@ -27,6 +27,10 @@ const columns = [
     title: "金额",
     dataIndex: "money",
     customRender: text => text + "元"
+  },{
+    title: "占用金额",
+    dataIndex: "occupied",
+    customRender: text => text + "元"
   },
   {
     title: "用途",
