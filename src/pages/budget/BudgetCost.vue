@@ -1,9 +1,11 @@
 <template>
   <div class="table-padding">
-    <div class="table-operators">
-      <router-link :to="{name:'报销'}">
-        <a-button type="primary">报销</a-button>
-      </router-link>
+    <div class="alert">
+      <a-alert type="info" :show-icon="true">
+        <div
+          slot="message"
+        >{{budget.year+'年度 '+budget.month+'月预算，共'+budget.money+'元，已用'+budget.occupied+'元'}}</div>
+      </a-alert>
     </div>
     <a-table :columns="columns" :dataSource="dataSource" :rowKey="record => record.id" />
   </div>
@@ -38,24 +40,30 @@ const columns = [
     dataIndex: "work.date",
     defaultSortOrder: "descend",
     sorter: (a, b) => a.date > b.date
-  },
-  {
-    title: "状态",
-    dataIndex: "work.status"
   }
 ];
 import CostDAO from "../../dao/costDAO";
+import BudgetDAO from "../../dao/budgetDAO";
 
 export default {
   data() {
     return {
-      desc: "查看预算列表",
+      desc: "查看预算费用占用情况",
+      needToBack: true,
       columns: columns,
-      dataSource: []
+      dataSource: [],
+      budget: {}
     };
   },
   mounted() {
-    this.dataSource = CostDAO.getCosts();
+    this.dataSource = CostDAO.getCosts(this.$route.params.id);
+    this.budget = BudgetDAO.getBudget(this.$route.params.id);
   }
 };
 </script>
+
+<style scoped>
+.alert {
+  margin-bottom: 16px;
+}
+</style>

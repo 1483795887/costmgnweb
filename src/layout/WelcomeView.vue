@@ -1,7 +1,7 @@
 <template>
   <welcome-layout :user="user" :desc="desc" :count="count">
     <transition name="page-taggle">
-      <router-view ref="workpage"/>
+      <router-view ref="workpage" />
     </transition>
   </welcome-layout>
 </template>
@@ -9,18 +9,19 @@
 <script>
 import WelcomeLayout from "./WelcomeLayout";
 export default {
-  data(){
+  data() {
     return {
-      desc:"",
-      count:0
-    }
+      desc: "",
+      count: 0
+    };
   },
   components: { WelcomeLayout },
-  computed:{
-    user(){
+  computed: {
+    user() {
       return this.$store.state.account.user;
     }
-  },mounted() {
+  },
+  mounted() {
     this.getPageHeaderInfo();
   },
   updated() {

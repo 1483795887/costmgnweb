@@ -2,7 +2,9 @@
   <a-form :label-col="{ span: 5 }" :wrapper-col="{ span: 12 }">
     <a-form-item label="合同编号">{{contract.no}}</a-form-item>
     <a-form-item label="合同方案编号">
-      <router-link :to="{name:'方案详情',params:{id:contract.planId}}">{{contract.planId}}</router-link>
+      <router-link
+        :to="{name:'方案详情',params:{id:contract.planId}}"
+      >{{(Array(8).join('0') + contract.planId).slice(-8)}}</router-link>
     </a-form-item>
     <a-form-item label="合同签署日期">{{contract.contractDate}}</a-form-item>
     <a-form-item label="合同金额">{{'￥'+contract.money + '元'}}</a-form-item>
@@ -31,11 +33,10 @@ export default {
       needToBack: true,
       desc: "查看合同信息",
       contract: {
-        work:{
-          user:{
-            
-          }
-        }
+        work: {
+          user: {}
+        },
+        planId: 0
       }
     };
   },

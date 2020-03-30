@@ -17,8 +17,8 @@
     <a-form-item label="用途">
       <a-input v-decorator="['type', { rules: [{ required: true, message: '请输入用途!' }] }]" />
     </a-form-item>
-    <a-form-item label="负责人">{{name}}</a-form-item>
-    <a-form-item label="部门">{{department}}</a-form-item>
+    <a-form-item label="负责人">{{user.name}}</a-form-item>
+    <a-form-item label="部门">{{user.department}}</a-form-item>
     <a-form-item label="修改时间">{{date}}</a-form-item>
     <a-form-item :wrapper-col="{ span: 12, offset: 5 }">
       <a-button type="primary" html-type="submit">保存</a-button>
@@ -29,28 +29,36 @@
 
 <script>
 import moment from "moment";
+import BudgetDAO from "../../dao/budgetDAO";
 
 export default {
   data() {
     return {
       needToBack: true,
-      name: "",
-      department: "",
-      date: "",
       dateFormat: "YYYY-MM-DD",
       yearmonth: null,
       money: 0,
       type: "",
-      user: null
+      date: "",
+      user: {}
     };
   },
   mounted() {
     this.desc = this.$route.params.desc;
-    this.yearmonth = moment();
-    this.user = this.getCurrentUser();
-    this.name = this.user.name;
-    this.department = this.user.department;
-    this.date = moment().format(this.dateFormat);
+    var budget = this.getBudget(this.$route.params.id);
+    if (budget != null) {
+      this.yearmonth = moment()
+        .year(budget.year)
+        .month(budget.month);
+      this.money = budget.money;
+      this.type = budget.type;
+      this.user = budget.work.user;
+      this.date = budget.work.date;
+    } else {
+      this.yearmonth = moment();
+      this.user = this.getCurrentUser();
+      this.date = moment().format(this.dateFormat);
+    }
     this.$nextTick(() => {
       this.form.setFieldsValue({
         yearmonth: this.yearmonth,
@@ -60,7 +68,7 @@ export default {
     });
   },
   beforeCreate() {
-    this.form = this.$form.createForm(this, { name: "plan-form" });
+    this.form = this.$form.createForm(this, { name: "budget-form" });
   },
   methods: {
     handleSubmit(e) {
@@ -76,6 +84,9 @@ export default {
     },
     onChangeYearMonth(date, dateString) {
       console.log(date, dateString);
+    },
+    getBudget(id) {
+      return BudgetDAO.getBudget(id);
     }
   }
 };

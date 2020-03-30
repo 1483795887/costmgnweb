@@ -127,7 +127,7 @@ export default {
     });
   },
   beforeCreate() {
-    this.form = this.$form.createForm(this, { name: "plan-form" });
+    this.form = this.$form.createForm(this, { name: "contract-form" });
   },
   computed: {
     plans() {

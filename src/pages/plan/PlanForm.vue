@@ -28,7 +28,7 @@ export default {
       description: "",
       user: {},
       dateFormat: "YYYY-MM-DD",
-      date:""
+      date: ""
     };
   },
   mounted() {

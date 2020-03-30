@@ -21,9 +21,7 @@ export default {
       desc: "查看方案信息",
       plan: {
         work: {
-          user:{
-            
-          }
+          user: {}
         }
       }
     };

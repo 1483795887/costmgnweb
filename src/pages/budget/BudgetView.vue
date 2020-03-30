@@ -1,6 +1,12 @@
 <template>
   <div class="table-padding">
-    <a-table :columns="columns" :dataSource="dataSource" :rowKey="record => record.id"/>
+    <a-table :columns="columns" :dataSource="dataSource" :rowKey="record => record.id">
+      <router-link
+        slot="budgetId"
+        slot-scope="text,record"
+        :to="{name:'预算费用',params:{id:record.id}}"
+      >{{(Array(8).join('0') + record.id).slice(-8)}}</router-link>
+    </a-table>
   </div>
 </template>
 
@@ -9,7 +15,7 @@ const columns = [
   {
     title: "预算编号",
     dataIndex: "id",
-    customRender: (text,record) =>(Array(8).join('0') + record.id).slice(-8)
+    scopedSlots: { customRender: "budgetId" }
   },
   {
     title: "年度",
@@ -27,7 +33,8 @@ const columns = [
     title: "金额",
     dataIndex: "money",
     customRender: text => text + "元"
-  },{
+  },
+  {
     title: "占用金额",
     dataIndex: "occupied",
     customRender: text => text + "元"
@@ -51,7 +58,7 @@ const columns = [
     sorter: (a, b) => a.date > b.date
   }
 ];
-import BudgetData from '../../dao/budgetDAO'
+import BudgetData from "../../dao/budgetDAO";
 
 export default {
   data() {
@@ -61,7 +68,7 @@ export default {
       dataSource: []
     };
   },
-  mounted(){
+  mounted() {
     this.dataSource = BudgetData.getBudgets();
   }
 };

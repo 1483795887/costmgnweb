@@ -3,8 +3,8 @@
     <div class="table-operators">
       <router-link :to="{name:'新增方案',params:{desc:'新增方案'}}">
         <a-button type="primary">新增</a-button>
-        <a-button :style="{ marginLeft: '24px' }">提交</a-button>
       </router-link>
+      <a-button :style="{ marginLeft: '24px' }" @click="onSelect">提交</a-button>
     </div>
     <standard-table
       :columns="columns"
@@ -66,6 +66,11 @@ export default {
   methods: {
     onchange(selectedRowKeys, selectedRows) {
       this.selectedRows = selectedRows;
+    },
+    onSelect() {
+      if (this.selectedRows.length == 0) {
+        this.$message.info("至少选择一项");
+      }
     }
   }
 };

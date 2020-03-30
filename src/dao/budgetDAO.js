@@ -6,11 +6,11 @@ const budget1 = {
   month: 3,
   money: 1000,
   type: '营销',
-  occupied:100,
+  occupied: 100,
   work: {
     user: UserData.getUsers()[0],
     status: '未通过',
-    date:'2020-02-04'
+    date: '2020-02-04'
   }
 }
 
@@ -20,11 +20,11 @@ const budget2 = {
   month: 3,
   money: 2000,
   type: '工资',
-  occupied:0,
+  occupied: 0,
   work: {
     user: UserData.getUsers()[1],
     status: '已通过',
-    date:'2020-02-04'
+    date: '2020-02-04'
   }
 }
 
@@ -34,11 +34,11 @@ const budget3 = {
   month: 3,
   money: 2300,
   type: '销售',
-  occupied:300,
+  occupied: 300,
   work: {
     user: UserData.getUsers()[2],
     status: '未通过',
-    date:'2020-02-04'
+    date: '2020-02-04'
   }
 }
 

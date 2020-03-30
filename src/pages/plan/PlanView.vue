@@ -37,7 +37,7 @@ const columns = [
   }
 ];
 
-import PlanData from '../../dao/planDAO'
+import PlanData from "../../dao/planDAO";
 
 export default {
   data() {
@@ -46,7 +46,8 @@ export default {
       columns: columns,
       dataSource: []
     };
-  },mounted(){
+  },
+  mounted() {
     this.dataSource = PlanData.getPlans();
   }
 };

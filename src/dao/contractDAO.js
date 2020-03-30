@@ -42,10 +42,10 @@ const contract2 = {
   }
 }
 
-const contracts=[contract1,contract2]
+const contracts = [contract1, contract2]
 
 export default {
-  getContracts(){
+  getContracts() {
     return contracts;
   },
   getContract(id) {

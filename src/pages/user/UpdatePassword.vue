@@ -24,5 +24,19 @@
   </a-form>
 </template>
 <script>
-export default {};
+export default {
+  beforeCreate() {
+    this.form = this.$form.createForm(this, { name: "plan-form" });
+  },
+  methods: {
+    handleSubmit(e) {
+      e.preventDefault();
+      this.form.validateFields((err, values) => {
+        if (!err) {
+          console.log(values);
+        }
+      });
+    }
+  }
+};
 </script>

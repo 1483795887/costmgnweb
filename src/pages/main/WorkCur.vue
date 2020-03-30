@@ -1,15 +1,10 @@
 <template>
   <div class="table-padding">
-    <a-table
-      :columns="columns"
-      :dataSource="dataSource"
-      :rowKey="record => record.id"
-    />
+    <a-table :columns="columns" :dataSource="dataSource" :rowKey="record => record.id" />
   </div>
 </template>
 
 <script>
-
 const works = [
   {
     id: 1,
@@ -57,7 +52,7 @@ export default {
     return {
       dataSource: works,
       columns: columns,
-      desc:"等待审批"
+      desc: "等待审批"
     };
   }
 };

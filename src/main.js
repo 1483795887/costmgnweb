@@ -2,7 +2,7 @@ import {
   AutoComplete, Breadcrumb, Card,
   Checkbox, Form, Icon, Input, Menu, Select, Layout, Dropdown,
   Avatar, Button, Badge, Tooltip, PageHeader, Descriptions, List,
-  Table, Alert, DatePicker, Result, Cascader
+  Table, Alert, DatePicker, Result, Cascader, message
 } from 'ant-design-vue';
 import Vue from 'vue';
 import App from './App.vue';
@@ -37,6 +37,12 @@ Vue.use(Alert);
 Vue.use(DatePicker);
 Vue.use(Result);
 Vue.use(Cascader);
+
+Vue.prototype.$message = message;
+
+message.config({
+  duration: 2
+});
 
 new Vue({
   el: '#app',

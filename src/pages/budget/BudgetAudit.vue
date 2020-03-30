@@ -1,8 +1,8 @@
 <template>
   <div class="table-padding">
     <div class="table-operators">
-      <a-button type="primary">批准</a-button>
-      <a-button :style="{ marginLeft: '24px' }">退回</a-button>
+      <a-button type="primary" @click="onApprove">批准</a-button>
+      <a-button :style="{ marginLeft: '24px' }" @click="onRefuse">退回</a-button>
     </div>
     <standard-table
       :columns="columns"
@@ -16,13 +16,13 @@
 
 <script>
 import StandardTable from "../../components/table/StandardTable";
-import BudgetData from '../../dao/budgetDAO'
+import BudgetData from "../../dao/budgetDAO";
 
 const columns = [
   {
     title: "预算编号",
     dataIndex: "id",
-    customRender: (text,record) =>(Array(8).join('0') + record.id).slice(-8)
+    customRender: (text, record) => (Array(8).join("0") + record.id).slice(-8)
   },
   {
     title: "年度",
@@ -77,12 +77,22 @@ export default {
       selectedRows: []
     };
   },
-  mounted(){
+  mounted() {
     this.dataSource = BudgetData.getBudgets();
   },
   methods: {
     onchange(selectedRowKeys, selectedRows) {
       this.selectedRows = selectedRows;
+    },
+    onApprove() {
+      if (this.selectedRows.length == 0) {
+        this.$message.info("至少选择一项");
+      }
+    },
+    onRefuse() {
+      if (this.selectedRows.length == 0) {
+        this.$message.info("至少选择一项");
+      }
     }
   }
 };

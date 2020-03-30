@@ -1,8 +1,8 @@
 <template>
   <div class="table-padding">
     <div class="table-operators">
-      <a-button type="primary">批准</a-button>
-      <a-button :style="{ marginLeft: '24px' }">退回</a-button>
+      <a-button type="primary" @click="onApprove">批准</a-button>
+      <a-button :style="{ marginLeft: '24px' }" @click="onRefuse">退回</a-button>
     </div>
     <standard-table
       :columns="columns"
@@ -78,6 +78,16 @@ export default {
   methods: {
     onchange(selectedRowKeys, selectedRows) {
       this.selectedRows = selectedRows;
+    },
+    onApprove() {
+      if (this.selectedRows.length == 0) {
+        this.$message.info("至少选择一项");
+      }
+    },
+    onRefuse() {
+      if (this.selectedRows.length == 0) {
+        this.$message.info("至少选择一项");
+      }
     }
   }
 };

@@ -22,6 +22,13 @@ import BudgetManage from '../pages/budget/BudgetManage'
 import BudgetView from '../pages/budget/BudgetView'
 import BudgetAudit from '../pages/budget/BudgetAudit'
 import BudgetForm from '../pages/budget/BudgetForm'
+import BudgetCost from '../pages/budget/BudgetCost'
+import BudgetOccupy from '../pages/budget/BudgetOccupy'
+
+import CostView from '../pages/cost/CostView'
+import CostForm from '../pages/cost/CostForm'
+import CostAudit from '../pages/cost/CostAudit'
+import CostPay from '../pages/cost/CostPay'
 
 import UserList from '../pages/user/UserList'
 import UserAdd from '../pages/user/UserAdd'
@@ -30,7 +37,7 @@ import Result404 from '../pages/results/404'
 
 Vue.use(VueRouter);
 
-const router =  new VueRouter({
+const router = new VueRouter({
   mode: 'history',
   base: __dirname,
   linkActiveClass: "active",
@@ -167,6 +174,37 @@ const router =  new VueRouter({
               path: '/budget/budgetAdd',
               name: '新增预算',
               component: BudgetForm
+            }, {
+              path: '/budget/budgetCost/:id',
+              name: '预算费用',
+              component: BudgetCost
+            }, {
+              path: '/budget/budgetOccupy',
+              name: '预算占用',
+              component: BudgetOccupy
+            }
+          ]
+        }, {
+          path: '/cost',
+          name: '费用',
+          component: PageView,
+          children: [
+            {
+              path: '/cost/costView',
+              name: '费用列表',
+              component: CostView
+            }, {
+              path: '/cost/costAdd',
+              name: '报销',
+              component: CostForm
+            }, {
+              path: '/cost/costAudit',
+              name: '费用审计',
+              component: CostAudit
+            }, {
+              path: '/cost/costPay',
+              name: '费用支付',
+              component: CostPay
             }
           ]
         }
@@ -179,11 +217,11 @@ const router =  new VueRouter({
   ]
 })
 
-router.beforeEach((to,from,next)=>{
-  if(to.matched.length!=0){
+router.beforeEach((to, from, next) => {
+  if (to.matched.length != 0) {
     next();
-  }else{
-    next({name:'404'})
+  } else {
+    next({ name: '404' })
   }
 })
 

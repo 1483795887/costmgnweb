@@ -17,7 +17,9 @@ export default {
   props: ["user", "desc", "count"],
   computed: {
     title() {
-      return "欢迎回来 " + this.user.name + " 您现有" + this.desc + ":" + this.count;
+      return (
+        "欢迎回来 " + this.user.name + " 您现有" + this.desc + ":" + this.count
+      );
     }
   }
 };

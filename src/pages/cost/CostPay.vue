@@ -1,10 +1,8 @@
 <template>
   <div class="table-padding">
     <div class="table-operators">
-      <div>
-        <a-button type="primary" @click="onOccupy">批准</a-button>
-        <a-button :style="{ marginLeft: '24px' }" @click="onRefuse">退回</a-button>
-      </div>
+      <a-button type="primary" @click="onApprove">支付</a-button>
+      <a-button :style="{ marginLeft: '24px' }" @click="onRefuse">拒绝支付</a-button>
     </div>
     <standard-table
       :columns="columns"
@@ -22,6 +20,11 @@ import CostDAO from "../../dao/costDAO";
 
 const columns = [
   {
+    title: "费用编号",
+    dataIndex: "id",
+    customRender: (text, record) => (Array(8).join("0") + record.id).slice(-8)
+  },
+  {
     title: "金额",
     dataIndex: "money",
     customRender: text => text + "元"
@@ -29,6 +32,10 @@ const columns = [
   {
     title: "用途",
     dataIndex: "type"
+  },
+  {
+    title: "部门",
+    dataIndex: "work.user.department"
   },
   {
     title: "负责人",
@@ -48,11 +55,10 @@ export default {
   },
   data() {
     return {
-      desc: "审计本部门的费用",
+      desc: "支付费用",
       columns: columns,
       dataSource: [],
-      selectedRows: [],
-      selectedIds: []
+      selectedRows: []
     };
   },
   mounted() {
@@ -61,20 +67,14 @@ export default {
   methods: {
     onchange(selectedRowKeys, selectedRows) {
       this.selectedRows = selectedRows;
-      this.selectedIds = this.selectedRows.map(obj => obj.id);
     },
-    onOccupy() {
-      if (this.selectedIds.length == 0) {
+    onApprove() {
+      if (this.selectedRows.length == 0) {
         this.$message.info("至少选择一项");
-      } else {
-        this.$router.push({
-          name: "预算占用",
-          query: { ids: this.selectedIds }
-        });
       }
     },
     onRefuse() {
-      if (this.selectedIds.length == 0) {
+      if (this.selectedRows.length == 0) {
         this.$message.info("至少选择一项");
       }
     }

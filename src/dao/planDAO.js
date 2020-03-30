@@ -65,6 +65,6 @@ export default {
     else
       return plan1;
   }, getPlans() {
-      return plans;
+    return plans;
   }
 }
