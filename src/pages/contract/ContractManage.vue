@@ -3,19 +3,28 @@
     <div class="table-operators">
       <router-link :to="{name:'新增合同',params:{desc:'新增合同'}}">
         <a-button type="primary">新增</a-button>
+        <a-button :style="{ marginLeft: '24px' }">提交</a-button>
       </router-link>
     </div>
-    <a-table :columns="columns" :dataSource="dataSource" :rowKey="record => record.id">
+    <standard-table
+      :selectedRows="selectedRows"
+      @change="onchange"
+      :columns="columns"
+      :dataSource="dataSource"
+      :rowKey="record => record.id"
+    >
       <router-link
         slot="contractId"
-        slot-scope="text,record"
+        slot-scope="{text,record}"
         :to="{name:'合同表格',params:{desc:'维护合同',id:record.id}}"
       >{{text}}</router-link>
-    </a-table>
+    </standard-table>
   </div>
 </template>
 
 <script>
+import StandardTable from "../../components/table/StandardTable";
+
 const columns = [
   {
     title: "合同编号",
@@ -52,15 +61,24 @@ const columns = [
 import ContractData from "../../dao/contractDAO";
 
 export default {
+  components: {
+    StandardTable
+  },
   data() {
     return {
       desc: "维护正在进行的合同",
       columns: columns,
-      dataSource: []
+      dataSource: [],
+      selectedRows: []
     };
   },
   mounted() {
     this.dataSource = ContractData.getContracts();
+  },
+  methods: {
+    onchange(selectedRowKeys, selectedRows) {
+      this.selectedRows = selectedRows;
+    }
   }
 };
 </script>

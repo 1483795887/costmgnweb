@@ -1,23 +1,10 @@
 <template>
   <div class="table-padding">
-    <div class="table-operators">
-      <a-button type="primary">批准</a-button>
-      <a-button :style="{ marginLeft: '24px' }">退回</a-button>
-    </div>
-    <standard-table
-      :columns="columns"
-      :dataSource="dataSource"
-      :selectedRows="selectedRows"
-      @change="onchange"
-      :rowKey="record => record.id"
-    />
+    <a-table :columns="columns" :dataSource="dataSource" :rowKey="record => record.id"/>
   </div>
 </template>
 
 <script>
-import StandardTable from "../../components/table/StandardTable";
-import BudgetData from '../../dao/budgetDAO'
-
 const columns = [
   {
     title: "预算编号",
@@ -46,10 +33,6 @@ const columns = [
     dataIndex: "type"
   },
   {
-    title: "状态",
-    dataIndex: "work.status"
-  },
-  {
     title: "部门",
     dataIndex: "work.user.department"
   },
@@ -64,26 +47,18 @@ const columns = [
     sorter: (a, b) => a.date > b.date
   }
 ];
+import BudgetData from '../../dao/budgetDAO'
 
 export default {
-  components: {
-    StandardTable
-  },
   data() {
     return {
-      desc: "审计正在进行的合同",
+      desc: "查看预算列表",
       columns: columns,
-      dataSource: [],
-      selectedRows: []
+      dataSource: []
     };
   },
   mounted(){
     this.dataSource = BudgetData.getBudgets();
-  },
-  methods: {
-    onchange(selectedRowKeys, selectedRows) {
-      this.selectedRows = selectedRows;
-    }
   }
 };
 </script>
