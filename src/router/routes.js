@@ -218,11 +218,26 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  if (to.matched.length != 0) {
-    next();
+  let user = sessionStorage.getItem("user");
+  if (to.path == '/login') {
+    if (user) {
+      next({ name: '主页' })
+    } else {
+      next();
+    }
   } else {
-    next({ name: '404' })
+    if (!user) {
+      next({ name: '登录页' })
+    } else {
+      if (to.matched.length != 0) {
+        next();
+      } else {
+        next({ name: '404' })
+      }
+    }
+
   }
+
 })
 
 export default router;

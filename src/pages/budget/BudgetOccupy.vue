@@ -40,6 +40,16 @@ export default {
     var count = 0;
     this.costs.map(obj => (count += obj.money));
     this.totalNeed = count;
+  },
+  methods: {
+    handleSubmit(e) {
+      e.preventDefault();
+      this.form.validateFields(err => {
+        if (!err) {
+          err;
+        }
+      });
+    }
   }
 };
 </script>

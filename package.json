@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "ant-design-vue": "1.5.0-rc.5",
+    "axios": "^0.19.2",
     "core-js": "^3.6.4",
     "vue": "^2.5.11",
     "vue-cookie": "^1.1.4",

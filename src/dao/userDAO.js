@@ -40,5 +40,9 @@ export default {
     return users;
   }, addUser(user) {
     console.log(user);
+  }, login(userid, password) {
+    if (userid != null && password != null)
+      return user1;
+    else return null;
   }
 }

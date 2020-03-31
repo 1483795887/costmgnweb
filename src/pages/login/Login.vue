@@ -34,34 +34,28 @@
 </template>
 
 <script>
+import UserDAO from "../../dao/userDAO";
+
 export default {
   beforeCreate() {
     this.form = this.$form.createForm(this, { name: "normal_login" });
-  },
-  mounted() {
-    var user = this.$cookie.get("user");
-    if (user == null) {
-      //测试使用
-      user = {
-        id: 10,
-        userid: "2020030001",
-        password: "123456",
-        name: "王五",
-        department: "管理",
-        post: "系统管理"
-      };
-    }
-    this.$store.commit("account/setuser", user);
-    this.$router.push({ name: "主页" });
   },
   methods: {
     handleSubmit(e) {
       e.preventDefault();
       this.form.validateFields((err, values) => {
         if (!err) {
-          this.$router.push({ name: "主页" });
-          console.log(values);
-          //this.$store.commit("account/setuser", getUser(values["userid"]));
+          let user = UserDAO.login(values.userid, values.password);
+          if (user != null) {
+            this.$store.commit("account/setuser", user);
+            sessionStorage.setItem("user", user);
+            this.$router.push({ name: "主页" });
+          }
+          //this.$router.push({ name: "主页" });
+          /*var user = {};
+          user.username = values.
+          this.$store.commit("account/setuser", user);
+    this.$router.push({ name: "主页" });*/
         }
       });
     }

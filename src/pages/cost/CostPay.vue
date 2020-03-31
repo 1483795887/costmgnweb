@@ -2,7 +2,6 @@
   <div class="table-padding">
     <div class="table-operators">
       <a-button type="primary" @click="onApprove">支付</a-button>
-      <a-button :style="{ marginLeft: '24px' }" @click="onRefuse">拒绝支付</a-button>
     </div>
     <standard-table
       :columns="columns"
@@ -69,11 +68,6 @@ export default {
       this.selectedRows = selectedRows;
     },
     onApprove() {
-      if (this.selectedRows.length == 0) {
-        this.$message.info("至少选择一项");
-      }
-    },
-    onRefuse() {
       if (this.selectedRows.length == 0) {
         this.$message.info("至少选择一项");
       }

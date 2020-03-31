@@ -2,7 +2,7 @@
   <a-dropdown>
     <span style="cursor: pointer">
       <a-avatar size="large" icon="user" />
-      <span>{{username}}</span>
+      <span>{{name}}</span>
     </span>
     <a-menu style="width: 150px" slot="overlay">
       <a-menu-item>
@@ -13,10 +13,10 @@
       </a-menu-item>
       <a-menu-divider />
       <a-menu-item>
-        <router-link :to="{name:'登录页'}">
+        <div @click="onLogout">
           <a-icon type="poweroff" />
           <span>退出登录</span>
-        </router-link>
+        </div>
       </a-menu-item>
     </a-menu>
   </a-dropdown>
@@ -25,9 +25,19 @@
 <script>
 export default {
   name: "HeaderAvatar",
-  computed: {
-    username() {
-      return this.$store.state.account.user.name;
+  data() {
+    return {
+      name: ""
+    };
+  },
+  mounted() {
+    this.name = this.$store.state.account.user.name;
+  },
+  methods: {
+    onLogout() {
+      this.$store.commit("account/setuser", null);
+      sessionStorage.removeItem("user");
+      this.$router.push({name:'登录页'});
     }
   }
 };

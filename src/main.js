@@ -6,13 +6,10 @@ import {
 } from 'ant-design-vue';
 import Vue from 'vue';
 import App from './App.vue';
-import VueCookies from 'vue-cookie';
 import router from './router/routes';
 import store from './store/index';
 import './components/table/table.css';
 import './layout/page.css';
-
-Vue.use(VueCookies)
 
 Vue.use(Form);
 Vue.use(Input);
