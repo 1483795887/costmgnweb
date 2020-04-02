@@ -43,10 +43,12 @@ export default {
           this.user.department = post[0];
           this.user.post = post[1];
           this.user.name = this.form.getFieldValue("name");
-          console.log(this.user);
-          UserDAO.addUser(this.user);
+          UserDAO.addUser(this.user, this.addUserResult);
         }
       });
+    },
+    addUserResult(res) {
+      console.log(res);
     }
   }
 };

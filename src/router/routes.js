@@ -28,7 +28,6 @@ import BudgetOccupy from '../pages/budget/BudgetOccupy'
 import CostView from '../pages/cost/CostView'
 import CostForm from '../pages/cost/CostForm'
 import CostAudit from '../pages/cost/CostAudit'
-import CostPay from '../pages/cost/CostPay'
 
 import UserList from '../pages/user/UserList'
 import UserAdd from '../pages/user/UserAdd'
@@ -201,10 +200,6 @@ const router = new VueRouter({
               path: '/cost/costAudit',
               name: '费用审计',
               component: CostAudit
-            }, {
-              path: '/cost/costPay',
-              name: '费用支付',
-              component: CostPay
             }
           ]
         }

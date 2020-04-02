@@ -72,9 +72,6 @@
         <a-menu-item key="costAudit">
           <router-link :to="{name:'费用审计'}">费用审计</router-link>
         </a-menu-item>
-        <a-menu-item key="costPay">
-          <router-link :to="{name:'费用支付'}">费用支付</router-link>
-        </a-menu-item>
       </a-sub-menu>
       <a-sub-menu key="user">
         <span slot="title">

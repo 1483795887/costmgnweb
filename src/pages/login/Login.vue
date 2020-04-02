@@ -45,12 +45,18 @@ export default {
       e.preventDefault();
       this.form.validateFields((err, values) => {
         if (!err) {
-          let user = UserDAO.login(values.userid, values.password);
-          if (user != null) {
+          console.log(values);
+          /*let user = */ /*UserDAO.login(
+            values.userid,
+            values.password,
+            this.loginCallBack
+          );*/
+          this.loginCallBack();
+          /*if (user != null) {
             this.$store.commit("account/setuser", user);
             sessionStorage.setItem("user", user);
             this.$router.push({ name: "主页" });
-          }
+          }*/
           //this.$router.push({ name: "主页" });
           /*var user = {};
           user.username = values.
@@ -58,6 +64,13 @@ export default {
     this.$router.push({ name: "主页" });*/
         }
       });
+    },
+    loginCallBack(data) {
+      console.log(data);
+      var user = UserDAO.getUsers()[0];
+      this.$store.commit("account/setuser", user);
+      sessionStorage.setItem("user", user);
+      this.$router.push({ name: "主页" });
     }
   }
 };

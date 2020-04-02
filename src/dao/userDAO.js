@@ -34,15 +34,14 @@ const users = [
   user1, user2, user3, user4
 ]
 
+import post from '../common/post'
 
 export default {
   getUsers() {
     return users;
-  }, addUser(user) {
-    console.log(user);
-  }, login(userid, password) {
-    if (userid != null && password != null)
-      return user1;
-    else return null;
+  }, addUser(user, callback) {
+    post('/api/user/addUser', user, callback);
+  }, login(userid, password,callback) {
+    post('/api/user/login',{userid:userid,password:password},callback);
   }
 }
