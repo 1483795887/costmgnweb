@@ -28,6 +28,7 @@ import BudgetOccupy from '../pages/budget/BudgetOccupy'
 import CostView from '../pages/cost/CostView'
 import CostForm from '../pages/cost/CostForm'
 import CostAudit from '../pages/cost/CostAudit'
+import CostManage from '../pages/cost/CostManage'
 
 import UserList from '../pages/user/UserList'
 import UserAdd from '../pages/user/UserAdd'
@@ -190,16 +191,24 @@ const router = new VueRouter({
           children: [
             {
               path: '/cost/costView',
-              name: '费用列表',
+              name: '查看费用',
               component: CostView
-            }, {
-              path: '/cost/costAdd',
-              name: '报销',
-              component: CostForm
             }, {
               path: '/cost/costAudit',
               name: '费用审计',
               component: CostAudit
+            },{
+              path: '/cost/costManage',
+              name: '费用维护',
+              component: CostManage
+            }, {
+              path: '/cost/costForm/:id',
+              name: '费用表格',
+              component: CostForm
+            }, {
+              path: '/cost/costAdd',
+              name: '新增费用',
+              component: CostForm
             }
           ]
         }

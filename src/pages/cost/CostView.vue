@@ -1,10 +1,5 @@
 <template>
   <div class="table-padding">
-    <div class="table-operators">
-      <router-link :to="{name:'报销'}">
-        <a-button type="primary">报销</a-button>
-      </router-link>
-    </div>
     <a-table :columns="columns" :dataSource="dataSource" :rowKey="record => record.id" />
   </div>
 </template>

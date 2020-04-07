@@ -66,11 +66,14 @@
         <span slot="title">
           <a-icon type="transaction" />费用
         </span>
-        <a-menu-item key="costView">
-          <router-link :to="{name:'费用列表'}">费用列表</router-link>
+        <a-menu-item key="costAdd">
+          <router-link :to="{name:'费用维护'}">费用维护</router-link>
         </a-menu-item>
         <a-menu-item key="costAudit">
           <router-link :to="{name:'费用审计'}">费用审计</router-link>
+        </a-menu-item>
+        <a-menu-item key="costView">
+          <router-link :to="{name:'查看费用'}">查看费用</router-link>
         </a-menu-item>
       </a-sub-menu>
       <a-sub-menu key="user">
