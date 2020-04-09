@@ -37,11 +37,15 @@ const users = [
 import post from '../common/post'
 
 export default {
-  getUsers() {
+  getDummyUsers() {
     return users;
-  }, addUser(user, callback) {
+  },
+  getUsers(callback) {
+    post('/api/user/getUserList', null, callback);
+  },
+  addUser(user, callback) {
     post('/api/user/addUser', user, callback);
-  }, login(userid, password,callback) {
-    post('/api/user/login',{userid:userid,password:password},callback);
+  }, login(userid, password, callback) {
+    post('/api/user/login', { userid: userid, password: password }, callback);
   }
 }

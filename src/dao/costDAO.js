@@ -6,7 +6,7 @@ const cost1 = {
   money: 100,
   budgetId: undefined,
   work: {
-    user: UserData.getUsers()[0],
+    user: UserData.getDummyUsers()[0],
     status: '待审核',
     date: "20200302"
   }
@@ -18,7 +18,7 @@ const cost2 = {
   money: 300,
   budgetId: 1,
   work: {
-    user: UserData.getUsers()[1],
+    user: UserData.getDummyUsers()[1],
     status: '待支付',
     date: "20200304"
   }
@@ -30,7 +30,7 @@ const cost3 = {
   money: 500,
   budgetId: 2,
   work: {
-    user: UserData.getUsers()[2],
+    user: UserData.getDummyUsers()[2],
     status: '退回',
     date: "20200303"
   }

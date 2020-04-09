@@ -18,6 +18,7 @@
 
 <script>
 import UserDAO from "../../dao/userDAO";
+import UserData from "../../common/user";
 import StandardTable from "../../components/table/StandardTable";
 
 const columns = [
@@ -31,11 +32,13 @@ const columns = [
   },
   {
     title: "部门",
-    dataIndex: "department"
+    dataIndex: "department",
+    customRender: (text, record) => UserData.getDepartment(record.department)
   },
   {
     title: "岗位",
-    dataIndex: "post"
+    dataIndex: "post",
+    customRender: (text, record) => UserData.getPost(record.post)
   }
 ];
 export default {
@@ -51,7 +54,7 @@ export default {
     };
   },
   mounted() {
-    this.dataSource = UserDAO.getUsers();
+    UserDAO.getUsers(this.getUserListCallback);
   },
   methods: {
     onchange(selectedRowKeys, selectedRows) {
@@ -60,6 +63,11 @@ export default {
     onSelect() {
       if (this.selectedRows.length == 0) {
         this.$message.info("至少选择一项");
+      }
+    },
+    getUserListCallback(data) {
+      if (data.code == 0) {
+        this.dataSource = data.data;
       }
     }
   }
