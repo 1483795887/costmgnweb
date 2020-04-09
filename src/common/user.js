@@ -19,15 +19,6 @@ export default {
       label: '营销',
       children: normalPost
     }, {
-      value: '财务',
-      label: '财务',
-      children: [
-        {
-          value: '会计',
-          label: '会计'
-        }
-      ]
-    }, {
       value: '管理',
       label: '管理',
       children: [
@@ -37,5 +28,16 @@ export default {
         }
       ]
     }
-  ]
+  ], getDepartment(no) {
+    return this.postDepartmentOption[no].value;
+  }, getPost(no) {
+    switch (no) {
+      case 0:
+        return '业务员';
+      case 1:
+        return "部门经理";
+      case 2:
+        return "系统管理员";
+    }
+  }
 }

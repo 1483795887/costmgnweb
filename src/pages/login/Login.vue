@@ -46,31 +46,20 @@ export default {
       this.form.validateFields((err, values) => {
         if (!err) {
           console.log(values);
-          /*let user = */ /*UserDAO.login(
-            values.userid,
-            values.password,
-            this.loginCallBack
-          );*/
-          this.loginCallBack();
-          /*if (user != null) {
-            this.$store.commit("account/setuser", user);
-            sessionStorage.setItem("user", user);
-            this.$router.push({ name: "主页" });
-          }*/
-          //this.$router.push({ name: "主页" });
-          /*var user = {};
-          user.username = values.
-          this.$store.commit("account/setuser", user);
-    this.$router.push({ name: "主页" });*/
+          UserDAO.login(values.userid, values.password, this.loginCallBack);
         }
       });
     },
     loginCallBack(data) {
       console.log(data);
-      var user = UserDAO.getUsers()[0];
-      this.$store.commit("account/setuser", user);
-      sessionStorage.setItem("user", user);
-      this.$router.push({ name: "主页" });
+      if (data.code == 0) {
+        var user = data.data;
+        this.$store.commit("account/setuser", user);
+        sessionStorage.setItem("user", user);
+        this.$router.push({ name: "主页" });
+      } else {
+        console.log("密码错误");
+      }
     }
   }
 };
