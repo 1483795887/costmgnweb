@@ -21,7 +21,7 @@
 
 <script>
 import UserDAO from "../../dao/userDAO";
-import UserData from "../../common/user";
+import Const from "../../common/const";
 import StandardTable from "../../components/table/StandardTable";
 
 const columns = [
@@ -36,12 +36,12 @@ const columns = [
   {
     title: "部门",
     dataIndex: "department",
-    customRender: (text, record) => UserData.getDepartment(record.department)
+    customRender: (text, record) => Const.getDepartment(record.department)
   },
   {
     title: "岗位",
     dataIndex: "post",
-    customRender: (text, record) => UserData.getPost(record.post)
+    customRender: (text, record) => Const.getPost(record.post)
   }
 ];
 export default {

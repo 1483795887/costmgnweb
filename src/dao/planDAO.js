@@ -58,13 +58,19 @@ const plans = [
   plan1, plan2, plan3, plan4
 ]
 
+import post from '../common/post'
+
 export default {
   getPlan(id) {
     if (id == null)
       return null
     else
       return plan1;
-  }, getPlans() {
+  }, getDummyPlans() {
     return plans;
+  }, getPlans(type,callback) {
+    post('/api/plan/getPlans', type, callback);
+  }, addPlan(value, callback) {
+    post('/api/plan/addPlan', value, callback);
   }
 }

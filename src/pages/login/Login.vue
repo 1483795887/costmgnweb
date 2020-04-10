@@ -63,13 +63,11 @@ export default {
       e.preventDefault();
       this.form.validateFields((err, values) => {
         if (!err) {
-          console.log(values);
           UserDAO.login(values.userid, values.password, this.loginCallBack);
         }
       });
     },
     loginCallBack(data) {
-      console.log(data);
       if (data.code == 0) {
         var user = data.data;
         this.$store.commit("account/setuser", user);

@@ -38,7 +38,8 @@ const columns = [
   },
   {
     title: "状态",
-    dataIndex: "work.status"
+    dataIndex: "work.status",
+    customRender: (text, record) => Const.getStatus(record.work.status)
   },
   {
     title: "提交时间",
@@ -50,6 +51,7 @@ const columns = [
 
 import StandardTable from "../../components/table/StandardTable";
 import PlanData from "../../dao/planDAO";
+import Const from "../../common/const";
 
 export default {
   components: {
@@ -64,7 +66,7 @@ export default {
     };
   },
   mounted() {
-    this.dataSource = PlanData.getPlans();
+    PlanData.getPlans(1, this.getPlansCallback);
   },
   methods: {
     onchange(selectedRowKeys, selectedRows) {
@@ -73,6 +75,11 @@ export default {
     onSelect() {
       if (this.selectedRows.length == 0) {
         this.$message.info("至少选择一项");
+      }
+    },
+    getPlansCallback(data) {
+      if (data.code == 0) {
+        this.dataSource = data.data;
       }
     }
   }

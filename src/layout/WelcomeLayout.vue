@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import UserData from "../common/user";
+import Const from "../common/const";
 
 export default {
   props: ["user", "desc", "count"],
@@ -30,8 +30,8 @@ export default {
     };
   },
   mounted() {
-    this.department = UserData.getDepartment(this.user.department);
-    this.post = UserData.getPost(this.user.post);
+    this.department = Const.getDepartment(this.user.department);
+    this.post = Const.getPost(this.user.post);
   },
   computed: {
     title() {

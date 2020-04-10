@@ -28,16 +28,5 @@ export default {
         }
       ]
     }
-  ], getDepartment(no) {
-    return this.postDepartmentOption[no].label;
-  }, getPost(no) {
-    switch (no) {
-      case 0:
-        return '业务员';
-      case 1:
-        return "部门经理";
-      case 2:
-        return "系统管理员";
-    }
-  }
+  ]
 }

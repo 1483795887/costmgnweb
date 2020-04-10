@@ -117,7 +117,7 @@ export default {
   },
   mounted() {
     this.desc = this.$route.params.desc;
-    this.plans = PlanDAO.getPlans();
+    this.plans = PlanDAO.getDummyPlans();
     var contract = this.getContract(this.$route.params.id);
     if (contract != null) {
       this.user = contract.work.user;

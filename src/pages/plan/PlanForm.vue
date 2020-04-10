@@ -12,7 +12,7 @@
       <a-input v-decorator="['description', { rules: [{ required: true, message: '请输入方案描述!' },{validator:descriptionValidator}] }]" />
     </a-form-item>
     <a-form-item label="负责人">{{user.name}}</a-form-item>
-    <a-form-item label="部门">{{user.department}}</a-form-item>
+    <a-form-item label="部门">{{department}}</a-form-item>
     <a-form-item label="修改时间">{{date}}</a-form-item>
     <a-form-item :wrapper-col="{ span: 12, offset: 5 }">
       <a-button
@@ -27,6 +27,7 @@
 <script>
 import moment from "moment";
 import PlanDAO from "../../dao/planDAO";
+import Const from "../../common/const";
 
 export default {
   data() {
@@ -36,7 +37,8 @@ export default {
       description: "",
       user: {},
       dateFormat: "YYYY-MM-DD",
-      date: ""
+      date: "",
+      department:""
     };
   },
   mounted() {
@@ -51,6 +53,7 @@ export default {
       this.user = this.$store.state.account.user;
       this.date = moment().format(this.dateFormat);
     }
+    this.department = Const.getDepartment(this.user.department);
     this.$nextTick(() => {
       this.form.setFieldsValue({
         title: this.title,
@@ -64,11 +67,19 @@ export default {
   methods: {
     handleSubmit(e) {
       e.preventDefault();
-      this.form.validateFields((err, values) => {
+      this.form.validateFields((err,values) => {
         if (!err) {
-          console.log(values);
+          var plan = {};
+          plan.title = values.title;
+          plan.description = values.description;
+          PlanDAO.addPlan(plan,this.addPlanCallback);
         }
       });
+    },
+    addPlanCallback(data){
+      if(data.code == 0){
+        this.$router.go(-1);
+      }
     },
     getPlan(id) {
       return PlanDAO.getPlan(id);

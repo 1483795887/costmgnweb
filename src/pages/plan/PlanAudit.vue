@@ -71,7 +71,7 @@ export default {
     };
   },
   mounted() {
-    this.dataSource = PlanData.getPlans();
+    this.dataSource = PlanData.getDummyPlans();
   },
   methods: {
     onchange(selectedRowKeys, selectedRows) {
