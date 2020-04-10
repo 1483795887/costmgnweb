@@ -8,8 +8,8 @@ import WorkToDo from '../pages/main/WorkToDo'
 import PlanManage from '../pages/plan/PlanManage'
 import PlanView from '../pages/plan/PlanView'
 import PlanAudit from '../pages/plan/PlanAudit'
-import PlanForm from '../pages/plan/PlanForm'
-import PlanInfo from '../pages/plan/PlanInfo'
+import PlanAdd from '../pages/plan/PlanAdd'
+import PlanUpdate from '../pages/plan/PlanUpdate'
 import ContractManage from '../pages/contract/ContractManage'
 import ContractView from '../pages/contract/ContractView'
 import ContractAudit from '../pages/contract/ContractAudit'
@@ -105,17 +105,17 @@ const router = new VueRouter({
               name: '查看方案',
               component: PlanView
             }, {
-              path: '/plan/planForm/:id',
-              name: '方案表格',
-              component: PlanForm
+              path: '/plan/planUpdate/:id',
+              name: '方案更新',
+              component: PlanUpdate
             }, {
               path: '/plan/planInfo/:id',
               name: '方案详情',
-              component: PlanInfo
+              component: PlanAdd
             }, {
               path: '/plan/planAdd',
-              name: '新增方案',
-              component: PlanForm
+              name: '方案新增',
+              component: PlanAdd
             }
           ]
         }, {

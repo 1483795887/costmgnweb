@@ -71,7 +71,7 @@ export default {
     };
   },
   mounted() {
-    this.dataSource = PlanData.getDummyPlans();
+    PlanData.getPlans(2, this.getPlansCallback);
   },
   methods: {
     onchange(selectedRowKeys, selectedRows) {
@@ -85,6 +85,11 @@ export default {
     onRefuse() {
       if (this.selectedRows.length == 0) {
         this.$message.info("至少选择一项");
+      }
+    },
+    getPlansCallback(data) {
+      if (data.code == 0) {
+        this.dataSource = data.data;
       }
     }
   }

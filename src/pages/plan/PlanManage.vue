@@ -1,7 +1,7 @@
 <template>
   <div class="table-padding">
     <div class="table-operators">
-      <router-link :to="{name:'新增方案',params:{desc:'新增方案'}}">
+      <router-link :to="{name:'方案新增'}">
         <a-button type="primary">新增</a-button>
       </router-link>
       <a-button
@@ -19,7 +19,7 @@
       <router-link
         slot="planId"
         slot-scope="{text,record}"
-        :to="{name:'方案表格',params:{desc:'维护方案',id:record.id}}"
+        :to="{name:'方案更新',params:{id:record.id}}"
       >{{(Array(8).join('0') + record.id).slice(-8)}}</router-link>
     </standard-table>
   </div>

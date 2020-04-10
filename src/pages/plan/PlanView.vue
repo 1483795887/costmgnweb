@@ -52,7 +52,14 @@ export default {
     };
   },
   mounted() {
-    this.dataSource = PlanData.getDummyPlans();
+    PlanData.getPlans(3, this.getPlansCallback);
+  },
+  methods: {
+    getPlansCallback(data) {
+      if (data.code == 0) {
+        this.dataSource = data.data;
+      }
+    }
   }
 };
 </script>

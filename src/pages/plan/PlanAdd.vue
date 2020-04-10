@@ -32,27 +32,19 @@ import Const from "../../common/const";
 export default {
   data() {
     return {
+      desc: "新增方案",
       needToBack: true,
       title: "",
       description: "",
       user: {},
       dateFormat: "YYYY-MM-DD",
       date: "",
-      department:""
+      department: ""
     };
   },
   mounted() {
-    this.desc = this.$route.params.desc;
-    var plan = this.getPlan(this.$route.params.id);
-    if (plan != null) {
-      this.user = plan.work.user;
-      this.title = plan.title;
-      this.description = plan.description;
-      this.date = plan.work.date;
-    } else {
-      this.user = this.$store.state.account.user;
-      this.date = moment().format(this.dateFormat);
-    }
+    this.user = this.$store.state.account.user;
+    this.date = moment().format(this.dateFormat);
     this.department = Const.getDepartment(this.user.department);
     this.$nextTick(() => {
       this.form.setFieldsValue({
@@ -67,22 +59,19 @@ export default {
   methods: {
     handleSubmit(e) {
       e.preventDefault();
-      this.form.validateFields((err,values) => {
+      this.form.validateFields((err, values) => {
         if (!err) {
           var plan = {};
           plan.title = values.title;
           plan.description = values.description;
-          PlanDAO.addPlan(plan,this.addPlanCallback);
+          PlanDAO.addPlan(plan, this.addPlanCallback);
         }
       });
     },
-    addPlanCallback(data){
-      if(data.code == 0){
+    addPlanCallback(data) {
+      if (data.code == 0) {
         this.$router.go(-1);
       }
-    },
-    getPlan(id) {
-      return PlanDAO.getPlan(id);
     },
     titleValidator(rule, value, callback) {
       if (value && value.length > 20) {

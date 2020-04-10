@@ -61,16 +61,15 @@ const plans = [
 import post from '../common/post'
 
 export default {
-  getPlan(id) {
-    if (id == null)
-      return null
-    else
-      return plan1;
+  getPlan(id, callback) {
+    post('/api/plan/getPlan', id, callback);
   }, getDummyPlans() {
     return plans;
-  }, getPlans(type,callback) {
+  }, getPlans(type, callback) {
     post('/api/plan/getPlans', type, callback);
   }, addPlan(value, callback) {
     post('/api/plan/addPlan', value, callback);
+  }, updatePlan(value, callback) {
+    post('/api/plan/updatePlan', value, callback);
   }
 }
