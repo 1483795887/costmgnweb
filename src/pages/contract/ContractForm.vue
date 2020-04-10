@@ -1,7 +1,15 @@
 <template>
-  <a-form :form="form" :label-col="{ span: 5 }" :wrapper-col="{ span: 12 }" @submit="handleSubmit">
+  <a-form
+    :form="form"
+    :label-col="{ span: 5 }"
+    :wrapper-col="{ span: 12 }"
+    @submit="handleSubmit"
+  >
+    <a-form-item label="合同名称">
+      <a-input v-decorator="['title', { rules: [{ required: true, message: '请输入合同名称!' },{validator:titleValidator}] }]" />
+    </a-form-item>
     <a-form-item label="合同编号">
-      <a-input v-decorator="['no', { rules: [{ required: true, message: '请输入合同编号!' }] }]" />
+      <a-input v-decorator="['no', { rules: [{ required: true, message: '请输入合同编号!' },{validator:contractNoValidator}] }]" />
     </a-form-item>
     <a-form-item label="方案编号">
       <a-select v-decorator="['planId', { rules: [{ required: true, message: '请选择方案编号!' }]}]">
@@ -27,7 +35,11 @@
     </a-form-item>
     <a-form-item label="付款方式">
       <a-select v-decorator="['payMethod', { rules: [{ required: true, message: '请选择付款方式!' }]}]">
-        <a-select-option v-for="(item,key) in payMethods" :key="key" :value="item">{{item}}</a-select-option>
+        <a-select-option
+          v-for="(item,key) in payMethods"
+          :key="key"
+          :value="item"
+        >{{item}}</a-select-option>
       </a-select>
     </a-form-item>
     <a-form-item label="付款条件">
@@ -35,29 +47,40 @@
         v-decorator="['payRequest', { rules: [{ required: true, message: '请选择付款条件!' }]}]"
         @change="onRequestChange"
       >
-        <a-select-option v-for="(item,key) in payRequests" :key="key" :value="item">{{item}}</a-select-option>
+        <a-select-option
+          v-for="(item,key) in payRequests"
+          :key="key"
+          :value="item"
+        >{{item}}</a-select-option>
       </a-select>
     </a-form-item>
-    <a-form-item label="持续月份" v-show="installment">
-      <a-input
-        v-decorator="['lastMonth', { rules: [{ required: installment, message: '请输入持续月份!' }] }]"
-      />
+    <a-form-item
+      label="持续月份"
+      v-show="installment"
+    >
+      <a-input v-decorator="['lastMonth', { rules: [{ required: installment, message: '请输入持续月份!' }] }]" />
     </a-form-item>
     <a-form-item label="公司名">
-      <a-input v-decorator="['company', { rules: [{ required: true, message: '请输入公司名!' }] }]" />
+      <a-input v-decorator="['company', { rules: [{ required: true, message: '请输入公司名!' },{validator:companyValidator}] }]" />
     </a-form-item>
     <a-form-item label="法人">
-      <a-input v-decorator="['legalPerson', { rules: [{ required: true, message: '请输入法人名!' }] }]" />
+      <a-input v-decorator="['legalPerson', { rules: [{ required: true, message: '请输入法人名!' },{validator:legalValidator}] }]" />
     </a-form-item>
     <a-form-item label="描述">
-      <a-input v-decorator="['description']" />
+      <a-input v-decorator="['description',{rules:[{validator:descriptionValidator}]}]" />
     </a-form-item>
     <a-form-item label="负责人">{{user.name}}</a-form-item>
     <a-form-item label="部门">{{user.department}}</a-form-item>
     <a-form-item label="修改时间">{{date}}</a-form-item>
     <a-form-item :wrapper-col="{ span: 12, offset: 5 }">
-      <a-button type="primary" html-type="submit">保存</a-button>
-      <a-button html-type="submit" :style="{ marginLeft: '24px' }">取消</a-button>
+      <a-button
+        type="primary"
+        html-type="submit"
+      >保存</a-button>
+      <a-button
+        html-type="submit"
+        :style="{ marginLeft: '24px' }"
+      >取消</a-button>
     </a-form-item>
   </a-form>
 </template>
@@ -77,6 +100,7 @@ export default {
       payRequests: contractData.payRequests,
       dateFormat: "YYYY-MM-DD",
       no: "",
+      title: "",
       planId: undefined,
       contractDate: moment(),
       money: 0,
@@ -87,17 +111,19 @@ export default {
       legalPerson: "",
       description: "",
       user: {},
-      date: ""
+      date: "",
+      plans: []
     };
   },
   mounted() {
     this.desc = this.$route.params.desc;
-
+    this.plans = PlanDAO.getPlans();
     var contract = this.getContract(this.$route.params.id);
     if (contract != null) {
       this.user = contract.work.user;
       this.date = contract.work.date;
       this.no = contract.no;
+      this.title = contract.title;
       this.planId = contract.planId;
       this.contractDate = moment(contract.contractDate, this.dateFormat);
       this.money = contract.money;
@@ -117,6 +143,7 @@ export default {
         planId: this.planId,
         contractDate: this.contractDate,
         money: this.money,
+        title: this.title,
         payMethod: this.payMethod,
         payRequest: this.payRequest,
         lastMonth: this.lastMonth,
@@ -128,11 +155,6 @@ export default {
   },
   beforeCreate() {
     this.form = this.$form.createForm(this, { name: "contract-form" });
-  },
-  computed: {
-    plans() {
-      return PlanDAO.getPlans();
-    }
   },
   methods: {
     handleSubmit(e) {
@@ -151,6 +173,36 @@ export default {
     },
     onRequestChange(value) {
       this.installment = value === contractData.payRequests.PAY_REQUEST_INSTALL;
+    },
+    titleValidator(rule, value, callback) {
+      if (value && value.length > 20) {
+        callback("长度过长");
+      } else callback();
+    },
+    contractNoValidator(rule, value, callback) {
+      if (value && value.length > 20) {
+        callback("长度过长");
+      } else callback();
+    },
+    companyValidator(rule, value, callback) {
+      if (value && value.length > 20) {
+        callback("长度过长");
+      } else callback();
+    },
+    legalValidator(rule, value, callback) {
+      if (value && value.length > 10) {
+        callback("长度过长");
+      } else callback();
+    },
+    ttitleValidator(rule, value, callback) {
+      if (value && value.length > 10) {
+        callback("长度过长");
+      } else callback();
+    },
+    descriptionValidator(rule, value, callback) {
+      if (value && value.length > 200) {
+        callback("长度过长");
+      } else callback();
     }
   }
 };

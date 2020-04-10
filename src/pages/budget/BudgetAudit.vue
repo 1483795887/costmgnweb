@@ -1,8 +1,14 @@
 <template>
   <div class="table-padding">
     <div class="table-operators">
-      <a-button type="primary" @click="onApprove">批准</a-button>
-      <a-button :style="{ marginLeft: '24px' }" @click="onRefuse">退回</a-button>
+      <a-button
+        type="primary"
+        @click="onApprove"
+      >批准</a-button>
+      <a-button
+        :style="{ marginLeft: '24px' }"
+        @click="onRefuse"
+      >退回</a-button>
     </div>
     <standard-table
       :columns="columns"

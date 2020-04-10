@@ -1,7 +1,13 @@
 <template>
   <div class="page-layout">
-    <a-page-header class="page-header" :title="title">
-      <a-descriptions size="small" :column="3">
+    <a-page-header
+      class="page-header"
+      :title="title"
+    >
+      <a-descriptions
+        size="small"
+        :column="3"
+      >
         <a-descriptions-item label="部门">{{department}}</a-descriptions-item>
         <a-descriptions-item label="岗位">{{post}}</a-descriptions-item>
       </a-descriptions>

@@ -1,5 +1,9 @@
 <template>
-  <welcome-layout :user="user" :desc="desc" :count="count">
+  <welcome-layout
+    :user="user"
+    :desc="desc"
+    :count="count"
+  >
     <transition name="page-taggle">
       <router-view ref="workpage" />
     </transition>

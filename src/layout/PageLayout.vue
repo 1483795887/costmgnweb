@@ -7,7 +7,10 @@
       :backIcon="!needToBack"
       @back="()=>$router.go(-1)"
     />
-    <div ref="page" class="page-content">
+    <div
+      ref="page"
+      class="page-content"
+    >
       <slot></slot>
     </div>
   </div>

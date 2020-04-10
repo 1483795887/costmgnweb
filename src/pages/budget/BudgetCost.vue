@@ -1,13 +1,18 @@
 <template>
   <div class="table-padding">
     <div class="alert">
-      <a-alert type="info" :show-icon="true">
-        <div
-          slot="message"
-        >{{budget.year+'年度 '+budget.month+'月预算，共'+budget.money+'元，已用'+budget.occupied+'元'}}</div>
+      <a-alert
+        type="info"
+        :show-icon="true"
+      >
+        <div slot="message">{{budget.year+'年度 '+budget.month+'月预算，共'+budget.money+'元，已用'+budget.occupied+'元'}}</div>
       </a-alert>
     </div>
-    <a-table :columns="columns" :dataSource="dataSource" :rowKey="record => record.id" />
+    <a-table
+      :columns="columns"
+      :dataSource="dataSource"
+      :rowKey="record => record.id"
+    />
   </div>
 </template>
 

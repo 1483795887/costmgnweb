@@ -4,7 +4,10 @@
       <router-link :to="{name:'新增方案',params:{desc:'新增方案'}}">
         <a-button type="primary">新增</a-button>
       </router-link>
-      <a-button :style="{ marginLeft: '24px' }" @click="onSelect">提交</a-button>
+      <a-button
+        :style="{ marginLeft: '24px' }"
+        @click="onSelect"
+      >提交</a-button>
     </div>
     <standard-table
       :columns="columns"

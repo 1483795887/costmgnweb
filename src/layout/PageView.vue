@@ -1,5 +1,9 @@
 <template>
-  <page-layout :desc="desc" :title="title" :needToBack="needToBack">
+  <page-layout
+    :desc="desc"
+    :title="title"
+    :needToBack="needToBack"
+  >
     <transition name="page-taggle">
       <router-view ref="page" />
     </transition>

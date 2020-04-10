@@ -1,5 +1,10 @@
 <template>
-  <a-form :form="form" :label-col="{ span: 5 }" :wrapper-col="{ span: 12 }" @submit="handleSubmit">
+  <a-form
+    :form="form"
+    :label-col="{ span: 5 }"
+    :wrapper-col="{ span: 12 }"
+    @submit="handleSubmit"
+  >
     <a-form-item label="金额">
       <a-input
         prefix="￥"
@@ -8,14 +13,20 @@
       />
     </a-form-item>
     <a-form-item label="用途">
-      <a-input v-decorator="['type', { rules: [{ required: true, message: '请输入用途!' }] }]" />
+      <a-input v-decorator="['type', { rules: [{ required: true, message: '请输入用途!' },{validator:typeValidator}] }]" />
     </a-form-item>
     <a-form-item label="负责人">{{user.name}}</a-form-item>
     <a-form-item label="部门">{{user.department}}</a-form-item>
     <a-form-item label="修改时间">{{date}}</a-form-item>
     <a-form-item :wrapper-col="{ span: 12, offset: 5 }">
-      <a-button type="primary" html-type="submit">保存</a-button>
-      <a-button html-type="submit" :style="{ marginLeft: '24px' }">取消</a-button>
+      <a-button
+        type="primary"
+        html-type="submit"
+      >保存</a-button>
+      <a-button
+        html-type="submit"
+        :style="{ marginLeft: '24px' }"
+      >取消</a-button>
     </a-form-item>
   </a-form>
 </template>
@@ -59,6 +70,11 @@ export default {
     },
     getCurrentUser() {
       return this.$store.state.account.user;
+    },
+    typeValidator(rule, value, callback) {
+      if (value && value.length > 20) {
+        callback("长度过长");
+      } else callback();
     }
   }
 };

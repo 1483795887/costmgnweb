@@ -1,7 +1,21 @@
 <template>
-  <a-form :form="form" :label-col="{ span: 5 }" :wrapper-col="{ span: 12 }" @submit="handleSubmit">
+  <a-form
+    :form="form"
+    :label-col="{ span: 5 }"
+    :wrapper-col="{ span: 12 }"
+    @submit="handleSubmit"
+  >
     <a-form-item label="员工姓名">
-      <a-input v-decorator="['name', { rules: [{ required: true, message: '请输入员工姓名!' }] }]" />
+      <a-input v-decorator="['name', 
+      { 
+        rules:[
+          { 
+            required: true, message: '请输入员工姓名!'
+          },{
+            validator:userNameValidate
+          }
+        ] 
+      }]" />
     </a-form-item>
     <a-form-item label="部门岗位">
       <a-cascader
@@ -11,8 +25,14 @@
       />
     </a-form-item>
     <a-form-item :wrapper-col="{ span: 12, offset: 5 }">
-      <a-button type="primary" html-type="submit">确定</a-button>
-      <a-button :style="{ marginLeft: '24px' }" @click="$router.go(-1)">取消</a-button>
+      <a-button
+        type="primary"
+        html-type="submit"
+      >确定</a-button>
+      <a-button
+        :style="{ marginLeft: '24px' }"
+        @click="$router.go(-1)"
+      >取消</a-button>
     </a-form-item>
   </a-form>
 </template>
@@ -48,8 +68,15 @@ export default {
       });
     },
     addUserResult(res) {
-      if(res.code == 0){
+      if (res.code == 0) {
         this.$router.go(-1);
+      }
+    },
+    userNameValidate(rule, value, callback) {
+      if (value && value.length > 20) {
+        callback("用户名过长");
+      } else {
+        callback();
       }
     }
   }

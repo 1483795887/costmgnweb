@@ -1,7 +1,13 @@
 <template>
   <div class="login-container">
-    <a-card class="login-card" title="登录">
-      <a-form :form="form" @submit="handleSubmit">
+    <a-card
+      class="login-card"
+      title="登录"
+    >
+      <a-form
+        :form="form"
+        @submit="handleSubmit"
+      >
         <a-form-item>
           <a-input
             v-decorator="[
@@ -10,7 +16,11 @@
         ]"
             placeholder="账号"
           >
-            <a-icon slot="prefix" type="user" style="color: rgba(0,0,0,.25)" />
+            <a-icon
+              slot="prefix"
+              type="user"
+              style="color: rgba(0,0,0,.25)"
+            />
           </a-input>
         </a-form-item>
         <a-form-item>
@@ -22,11 +32,19 @@
             type="password"
             placeholder="密码"
           >
-            <a-icon slot="prefix" type="lock" style="color: rgba(0,0,0,.25)" />
+            <a-icon
+              slot="prefix"
+              type="lock"
+              style="color: rgba(0,0,0,.25)"
+            />
           </a-input>
         </a-form-item>
         <a-form-item>
-          <a-button type="primary" html-type="submit" class="login-form-button">登录</a-button>
+          <a-button
+            type="primary"
+            html-type="submit"
+            class="login-form-button"
+          >登录</a-button>
         </a-form-item>
       </a-form>
     </a-card>
@@ -58,7 +76,7 @@ export default {
         sessionStorage.setItem("user", user);
         this.$router.push({ name: "主页" });
       } else {
-        console.log("密码错误");
+        this.$message.info("账号或密码错误");
       }
     }
   }

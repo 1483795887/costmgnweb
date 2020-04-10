@@ -1,8 +1,14 @@
 <template>
   <div class="table-padding">
     <div class="table-operators">
-      <a-button type="primary" @click="onApprove">批准</a-button>
-      <a-button :style="{ marginLeft: '24px' }" @click="onRefuse">退回</a-button>
+      <a-button
+        type="primary"
+        @click="onApprove"
+      >批准</a-button>
+      <a-button
+        :style="{ marginLeft: '24px' }"
+        @click="onRefuse"
+      >退回</a-button>
     </div>
     <standard-table
       :columns="columns"
@@ -11,7 +17,10 @@
       @change="onchange"
       :rowKey="record => record.id"
     >
-      <template slot="contractId" slot-scope="{text,record}">
+      <template
+        slot="contractId"
+        slot-scope="{text,record}"
+      >
         <router-link :to="{name:'合同详情',params:{id:record.id}}">{{text}}</router-link>
       </template>
     </standard-table>
@@ -26,6 +35,10 @@ const columns = [
     title: "合同编号",
     dataIndex: "no",
     scopedSlots: { customRender: "contractId" }
+  },
+  {
+    title: "标题",
+    dataIndex: "title"
   },
   {
     title: "公司名",

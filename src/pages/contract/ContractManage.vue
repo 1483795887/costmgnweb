@@ -4,7 +4,10 @@
       <router-link :to="{name:'新增合同',params:{desc:'新增合同'}}">
         <a-button type="primary">新增</a-button>
       </router-link>
-      <a-button :style="{ marginLeft: '24px' }" @click="onSelect">提交</a-button>
+      <a-button
+        :style="{ marginLeft: '24px' }"
+        @click="onSelect"
+      >提交</a-button>
     </div>
     <standard-table
       :selectedRows="selectedRows"
@@ -30,6 +33,10 @@ const columns = [
     title: "合同编号",
     dataIndex: "no",
     scopedSlots: { customRender: "contractId" }
+  },
+  {
+    title: "标题",
+    dataIndex: "title"
   },
   {
     title: "公司名",

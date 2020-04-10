@@ -197,7 +197,7 @@ const router = new VueRouter({
               path: '/cost/costAudit',
               name: '费用审计',
               component: CostAudit
-            },{
+            }, {
               path: '/cost/costManage',
               name: '费用维护',
               component: CostManage

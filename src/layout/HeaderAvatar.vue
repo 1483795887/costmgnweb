@@ -1,10 +1,16 @@
 <template>
   <a-dropdown>
     <span style="cursor: pointer">
-      <a-avatar size="large" icon="user" />
+      <a-avatar
+        size="large"
+        icon="user"
+      />
       <span>{{name}}</span>
     </span>
-    <a-menu style="width: 150px" slot="overlay">
+    <a-menu
+      style="width: 150px"
+      slot="overlay"
+    >
       <a-menu-item>
         <router-link :to="{name:'修改密码'}">
           <a-icon type="setting" />
@@ -37,7 +43,7 @@ export default {
     onLogout() {
       this.$store.commit("account/setuser", null);
       sessionStorage.removeItem("user");
-      this.$router.push({name:'登录页'});
+      this.$router.push({ name: "登录页" });
     }
   }
 };

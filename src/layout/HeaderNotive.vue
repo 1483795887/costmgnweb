@@ -1,10 +1,20 @@
 <template>
-  <a-tooltip class="header-item" title="待办事务" placement="bottom">
+  <a-tooltip
+    class="header-item"
+    title="待办事务"
+    placement="bottom"
+  >
     <span>
-      <a-badge count="12" class="header-notice">
-         <router-link :to="{name:'待办事务'}">
-            <a-icon type="bell" class="header-notice-icon" />
-          </router-link>
+      <a-badge
+        count="12"
+        class="header-notice"
+      >
+        <router-link :to="{name:'待办事务'}">
+          <a-icon
+            type="bell"
+            class="header-notice-icon"
+          />
+        </router-link>
       </a-badge>
     </span>
   </a-tooltip>

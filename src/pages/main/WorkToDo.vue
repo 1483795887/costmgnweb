@@ -1,6 +1,10 @@
 <template>
   <div class="table-padding">
-    <a-table :columns="columns" :dataSource="dataSource" :rowKey="record => record.id" />
+    <a-table
+      :columns="columns"
+      :dataSource="dataSource"
+      :rowKey="record => record.id"
+    />
   </div>
 </template>
 

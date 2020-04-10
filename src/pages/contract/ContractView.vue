@@ -1,6 +1,10 @@
 <template>
   <div class="table-padding">
-    <a-table :columns="columns" :dataSource="dataSource" :rowKey="record => record.id">
+    <a-table
+      :columns="columns"
+      :dataSource="dataSource"
+      :rowKey="record => record.id"
+    >
       <router-link
         slot="contractId"
         slot-scope="text,record"
@@ -16,6 +20,10 @@ const columns = [
     title: "合同编号",
     dataIndex: "no",
     scopedSlots: { customRender: "contractId" }
+  },
+  {
+    title: "标题",
+    dataIndex: "title"
   },
   {
     title: "公司名",
