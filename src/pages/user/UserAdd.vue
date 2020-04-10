@@ -1,7 +1,7 @@
 <template>
   <a-form :form="form" :label-col="{ span: 5 }" :wrapper-col="{ span: 12 }" @submit="handleSubmit">
     <a-form-item label="员工姓名">
-      <a-input v-decorator="['name', { rules: [{ required: true, message: '请输入方案名!' }] }]" />
+      <a-input v-decorator="['name', { rules: [{ required: true, message: '请输入员工姓名!' }] }]" />
     </a-form-item>
     <a-form-item label="部门岗位">
       <a-cascader
@@ -48,7 +48,9 @@ export default {
       });
     },
     addUserResult(res) {
-      console.log(res);
+      if(res.code == 0){
+        this.$router.go(-1);
+      }
     }
   }
 };

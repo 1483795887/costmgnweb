@@ -1,9 +1,9 @@
 const normalPost = [
   {
-    value: '业务员',
+    value: 0,
     label: '业务员'
   }, {
-    value: '部门经理',
+    value: 1,
     label: '部门经理'
   }
 ]
@@ -11,25 +11,25 @@ const normalPost = [
 export default {
   postDepartmentOption: [
     {
-      value: '生产',
+      value: 0,
       label: '生产',
       children: normalPost
     }, {
-      value: '营销',
+      value: 1,
       label: '营销',
       children: normalPost
     }, {
-      value: '管理',
+      value:2,
       label: '管理',
       children: [
         {
-          value: '系统管理员',
+          value: 0,
           label: '系统管理员'
         }
       ]
     }
   ], getDepartment(no) {
-    return this.postDepartmentOption[no].value;
+    return this.postDepartmentOption[no].label;
   }, getPost(no) {
     switch (no) {
       case 0:
