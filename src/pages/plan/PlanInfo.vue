@@ -40,23 +40,16 @@ export default {
     };
   },
   mounted() {
-    this.getPlan(this.$route.params.id, this.getPlanCallback);
+    PlanDAO.getPlan(this.$route.params.id, this.getPlanCallback);
   },
   methods: {
-    getPlan(id) {
-      return PlanDAO.getPlan(id);
-    },
     goBack() {
       this.$router.go(-1);
     },
     getPlanCallback(data) {
       if (data.code == 0) {
-        var plan = data.data;
-        this.user = plan.work.user;
-        this.title = plan.title;
-        this.description = plan.description;
-        this.date = plan.work.date;
-        this.department = Const.getDepartment(this.user.department);
+        this.plan = data.data;
+        this.department = Const.getDepartment(this.plan.work.user.department);
       }
     }
   }

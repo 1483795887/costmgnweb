@@ -15,6 +15,7 @@
 </template>
 
 <script>
+import Const from "../../common/const";
 const columns = [
   {
     title: "方案编号",
@@ -31,7 +32,8 @@ const columns = [
   },
   {
     title: "部门",
-    dataIndex: "work.user.department"
+    dataIndex: "work.user.department",
+    customRender: (text, record) => Const.getDepartment(record.work.department)
   },
   {
     title: "提交时间",

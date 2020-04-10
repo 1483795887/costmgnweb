@@ -46,7 +46,8 @@ const columns = [
   },
   {
     title: "部门",
-    dataIndex: "work.user.department"
+    dataIndex: "work.user.department",
+    customRender: (text, record) => Const.getDepartment(record.work.department)
   },
   {
     title: "提交时间",
@@ -57,6 +58,7 @@ const columns = [
 ];
 
 import PlanData from "../../dao/planDAO";
+import Const from "../../common/const";
 
 export default {
   components: {
@@ -67,24 +69,42 @@ export default {
       desc: "审计正在进行的方案",
       columns: columns,
       dataSource: [],
-      selectedRows: []
+      selectedRows: [],
+      selectedRowKeys: []
     };
   },
   mounted() {
-    PlanData.getPlans(2, this.getPlansCallback);
+    this.getPlans();
   },
   methods: {
     onchange(selectedRowKeys, selectedRows) {
       this.selectedRows = selectedRows;
+      this.selectedRowKeys = selectedRowKeys;
     },
     onApprove() {
       if (this.selectedRows.length == 0) {
         this.$message.info("至少选择一项");
+      } else {
+        var data = {};
+        data.idList = this.selectedRowKeys;
+        PlanData.approvePlans(data, this.onCallback);
       }
     },
     onRefuse() {
       if (this.selectedRows.length == 0) {
         this.$message.info("至少选择一项");
+      } else {
+        var data = {};
+        data.idList = this.selectedRowKeys;
+        PlanData.refusePlans(data, this.onCallback);
+      }
+    },
+    getPlans() {
+      PlanData.getPlans(2, this.getPlansCallback);
+    },
+    onCallback(data) {
+      if (data.code == 0) {
+        this.getPlans();
       }
     },
     getPlansCallback(data) {

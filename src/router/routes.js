@@ -7,6 +7,7 @@ import WorkCur from '../pages/main/WorkCur'
 import WorkToDo from '../pages/main/WorkToDo'
 import PlanManage from '../pages/plan/PlanManage'
 import PlanView from '../pages/plan/PlanView'
+import PlanInfo from '../pages/plan/PlanInfo'
 import PlanAudit from '../pages/plan/PlanAudit'
 import PlanAdd from '../pages/plan/PlanAdd'
 import PlanUpdate from '../pages/plan/PlanUpdate'
@@ -111,7 +112,7 @@ const router = new VueRouter({
             }, {
               path: '/plan/planInfo/:id',
               name: '方案详情',
-              component: PlanAdd
+              component: PlanInfo
             }, {
               path: '/plan/planAdd',
               name: '方案新增',

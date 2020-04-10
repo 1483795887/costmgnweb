@@ -62,7 +62,8 @@ export default {
       desc: "维护正在进行的方案",
       columns: columns,
       dataSource: [],
-      selectedRows: []
+      selectedRows: [],
+      selectedRowKeys: []
     };
   },
   mounted() {
@@ -71,15 +72,25 @@ export default {
   methods: {
     onchange(selectedRowKeys, selectedRows) {
       this.selectedRows = selectedRows;
+      this.selectedRowKeys = selectedRowKeys;
     },
     onSelect() {
       if (this.selectedRows.length == 0) {
         this.$message.info("至少选择一项");
+      } else {
+        var data = {};
+        data.idList = this.selectedRowKeys;
+        PlanData.submitPlans(data, this.submitCallback);
       }
     },
     getPlansCallback(data) {
       if (data.code == 0) {
         this.dataSource = data.data;
+      }
+    },
+    submitCallback(data) {
+      if (data.code == 0) {
+        PlanData.getPlans(1, this.getPlansCallback);
       }
     }
   }
