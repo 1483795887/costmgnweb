@@ -15,7 +15,7 @@
       :dataSource="dataSource"
       :selectedRows="selectedRows"
       @change="onchange"
-      :rowKey="record => record.id"
+      :rowKey="record => record.work.id"
     >
       <template
         slot="planId"

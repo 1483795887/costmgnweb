@@ -15,7 +15,7 @@
       :dataSource="dataSource"
       :selectedRows="selectedRows"
       @change="onchange"
-      :rowKey="record => record.id"
+      :rowKey="record => record.work.id"
     >
       <template
         slot="contractId"
@@ -29,11 +29,12 @@
 
 <script>
 import StandardTable from "../../components/table/StandardTable";
+import Const from "../../common/const";
 
 const columns = [
   {
     title: "合同编号",
-    dataIndex: "no",
+    dataIndex: "contractNo",
     scopedSlots: { customRender: "contractId" }
   },
   {
@@ -57,7 +58,9 @@ const columns = [
   },
   {
     title: "部门",
-    dataIndex: "work.user.department"
+    dataIndex: "work.user.department",
+    customRender: (text, record) =>
+      Const.getDepartment(record.work.user.department)
   },
   {
     title: "负责人",
@@ -82,25 +85,48 @@ export default {
       desc: "审计正在进行的合同",
       columns: columns,
       dataSource: [],
-      selectedRows: []
+      selectedRows: [],
+      selectedRowKeys: []
     };
   },
   mounted() {
-    this.dataSource = ContractData.getContracts();
+    this.fetchData();
   },
   methods: {
     onchange(selectedRowKeys, selectedRows) {
       this.selectedRows = selectedRows;
+      this.selectedRowKeys = selectedRowKeys;
     },
     onApprove() {
       if (this.selectedRows.length == 0) {
         this.$message.info("至少选择一项");
+      } else {
+        var data = {};
+        data.idList = this.selectedRowKeys;
+        ContractData.approveContracts(data, this.onRefreshData);
       }
     },
     onRefuse() {
       if (this.selectedRows.length == 0) {
         this.$message.info("至少选择一项");
+      } else {
+        var data = {};
+        data.idList = this.selectedRowKeys;
+        ContractData.refuseContracts(data, this.onRefreshData);
       }
+    },
+    getContractsCallback(data) {
+      if (data.code == 0) {
+        this.dataSource = data.data;
+      }
+    },
+    onRefreshData(data) {
+      if (data.code == 0) {
+        this.fetchData();
+      }
+    },
+    fetchData() {
+      ContractData.getContracts(2, this.getContractsCallback);
     }
   }
 };

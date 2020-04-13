@@ -70,7 +70,7 @@
       <a-input v-decorator="['description',{rules:[{validator:descriptionValidator}]}]" />
     </a-form-item>
     <a-form-item label="负责人">{{user.name}}</a-form-item>
-    <a-form-item label="部门">{{user.department}}</a-form-item>
+    <a-form-item label="部门">{{department}}</a-form-item>
     <a-form-item label="修改时间">{{date}}</a-form-item>
     <a-form-item :wrapper-col="{ span: 12, offset: 5 }">
       <a-button
@@ -90,10 +90,12 @@ import moment from "moment";
 import contractData from "../../common/contract";
 import ContractDAO from "../../dao/contractDAO";
 import PlanDAO from "../../dao/planDAO";
+import Const from "../../common/const";
 
 export default {
   data() {
     return {
+      desc: "更新合同",
       needToBack: true,
       installment: false,
       payMethods: contractData.payMethods,
@@ -112,46 +114,13 @@ export default {
       description: "",
       user: {},
       date: "",
-      plans: []
+      plans: [],
+      department: ""
     };
   },
   mounted() {
-    this.desc = this.$route.params.desc;
     this.plans = PlanDAO.getDummyPlans();
-    var contract = this.getContract(this.$route.params.id);
-    if (contract != null) {
-      this.user = contract.work.user;
-      this.date = contract.work.date;
-      this.no = contract.no;
-      this.title = contract.title;
-      this.planId = contract.planId;
-      this.contractDate = moment(contract.contractDate, this.dateFormat);
-      this.money = contract.money;
-      this.payMethod = contract.payMethod;
-      this.payRequest = contract.payRequest;
-      this.lastMonth = contract.lastMonth;
-      this.company = contract.company;
-      this.legalPerson = contract.legalPerson;
-      this.description = contract.description;
-    } else {
-      this.user = this.getCurrentUser();
-      this.date = moment().format(this.dateFormat);
-    }
-    this.$nextTick(() => {
-      this.form.setFieldsValue({
-        no: this.no,
-        planId: this.planId,
-        contractDate: this.contractDate,
-        money: this.money,
-        title: this.title,
-        payMethod: this.payMethod,
-        payRequest: this.payRequest,
-        lastMonth: this.lastMonth,
-        company: this.company,
-        legalPerson: this.legalPerson,
-        description: this.description
-      });
-    });
+    ContractDAO.getContract(this.$route.params.id, this.getContractCallback);
   },
   beforeCreate() {
     this.form = this.$form.createForm(this, { name: "contract-form" });
@@ -164,6 +133,39 @@ export default {
           err;
         }
       });
+    },
+    getContractCallback(data) {
+      if (data.code == 0) {
+        var contract = data.data;
+        this.user = contract.work.user;
+        this.department = Const.getDepartment(this.user.department);
+        this.date = contract.work.date;
+        this.no = contract.contractNo;
+        this.title = contract.title;
+        this.planId = contract.planId;
+        this.contractDate = moment(contract.contractDate, this.dateFormat);
+        this.money = contract.money;
+        this.payMethod = contract.payMethod;
+        this.payRequest = contract.payRequest;
+        this.lastMonth = contract.lastMonth;
+        this.company = contract.company;
+        this.legalPerson = contract.legalPerson;
+        this.description = contract.description;
+
+        this.form.setFieldsValue({
+          no: this.no,
+          planId: this.planId,
+          contractDate: this.contractDate,
+          money: this.money,
+          title: this.title,
+          payMethod: this.payMethod,
+          payRequest: this.payRequest,
+          lastMonth: this.lastMonth,
+          company: this.company,
+          legalPerson: this.legalPerson,
+          description: this.description
+        });
+      }
     },
     getCurrentUser() {
       return this.$store.state.account.user;

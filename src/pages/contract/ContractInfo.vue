@@ -4,7 +4,7 @@
     :wrapper-col="{ span: 12 }"
   >
     <a-form-item label="合同名称">{{contract.title}}</a-form-item>
-    <a-form-item label="合同编号">{{contract.no}}</a-form-item>
+    <a-form-item label="合同编号">{{contract.contractNo}}</a-form-item>
     <a-form-item label="合同方案编号">
       <router-link :to="{name:'方案详情',params:{id:contract.planId}}">{{(Array(8).join('0') + contract.planId).slice(-8)}}</router-link>
     </a-form-item>
@@ -16,11 +16,11 @@
       label="持续月份"
       v-if="contract.payRequest==='分期付款'"
     >{{contract.lastMonth}}</a-form-item>
-    <a-form-item label="公司名">{{contract.companyName}}</a-form-item>
+    <a-form-item label="公司名">{{contract.company}}</a-form-item>
     <a-form-item label="法人">{{contract.legalPerson}}</a-form-item>
-    <a-form-item label="描述">{{contract.desc}}</a-form-item>
+    <a-form-item label="描述">{{contract.description}}</a-form-item>
     <a-form-item label="负责人">{{contract.work.user.name}}</a-form-item>
-    <a-form-item label="部门">{{contract.work.user.department}}</a-form-item>
+    <a-form-item label="部门">{{department}}</a-form-item>
     <a-form-item label="修改时间">{{contract.work.date}}</a-form-item>
     <a-form-item :wrapper-col="{ span: 12, offset: 5 }">
       <a-button
@@ -39,6 +39,7 @@
 
 <script>
 import ContractDAO from "../../dao/contractDAO";
+import Const from "../../common/const";
 
 export default {
   data() {
@@ -50,19 +51,25 @@ export default {
           user: {}
         },
         planId: 0
-      }
+      },
+      department: ""
     };
   },
   methods: {
-    getContract(id) {
-      this.contract = ContractDAO.getContract(id);
-    },
     goBack() {
       this.$router.go(-1);
+    },
+    getContractCallback(data) {
+      if (data.code == 0) {
+        this.contract = data.data;
+        this.department = Const.getDepartment(
+          this.contract.work.user.department
+        );
+      }
     }
   },
   mounted() {
-    this.getContract(this.$route.params.id);
+    ContractDAO.getContract(this.$route.params.id, this.getContractCallback);
   }
 };
 </script>

@@ -18,7 +18,7 @@
 const columns = [
   {
     title: "合同编号",
-    dataIndex: "no",
+    dataIndex: "contractNo",
     scopedSlots: { customRender: "contractId" }
   },
   {
@@ -42,7 +42,8 @@ const columns = [
   },
   {
     title: "部门",
-    dataIndex: "work.user.department"
+    dataIndex: "work.user.department",
+    customRender: (text, record) => Const.getDepartment(record.work.department)
   },
   {
     title: "负责人",
@@ -57,6 +58,7 @@ const columns = [
 ];
 
 import ContractData from "../../dao/contractDAO";
+import Const from "../../common/const";
 
 export default {
   data() {
@@ -67,7 +69,14 @@ export default {
     };
   },
   mounted() {
-    this.dataSource = ContractData.getContracts();
+    ContractData.getContracts(3, this.getContractsCallback);
+  },
+  methods: {
+    getContractsCallback(data) {
+      if (data.code == 0) {
+        this.dataSource = data.data;
+      }
+    }
   }
 };
 </script>

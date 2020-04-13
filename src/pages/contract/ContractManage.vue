@@ -14,12 +14,12 @@
       @change="onchange"
       :columns="columns"
       :dataSource="dataSource"
-      :rowKey="record => record.id"
+      :rowKey="record => record.work.id"
     >
       <router-link
         slot="contractId"
         slot-scope="{text,record}"
-        :to="{name:'合同表格',params:{desc:'维护合同',id:record.id}}"
+        :to="{name:'合同更新',params:{id:record.id}}"
       >{{text}}</router-link>
     </standard-table>
   </div>
@@ -27,11 +27,12 @@
 
 <script>
 import StandardTable from "../../components/table/StandardTable";
+import Const from "../../common/const";
 
 const columns = [
   {
     title: "合同编号",
-    dataIndex: "no",
+    dataIndex: "contractNo",
     scopedSlots: { customRender: "contractId" }
   },
   {
@@ -55,7 +56,8 @@ const columns = [
   },
   {
     title: "状态",
-    dataIndex: "work.status"
+    dataIndex: "work.status",
+    customRender: (text, record) => Const.getStatus(record.work.status)
   },
   {
     title: "提交时间",
@@ -76,19 +78,35 @@ export default {
       desc: "维护正在进行的合同",
       columns: columns,
       dataSource: [],
-      selectedRows: []
+      selectedRows: [],
+      selectedRowKeys: []
     };
   },
   mounted() {
-    this.dataSource = ContractData.getContracts();
+    ContractData.getContracts(1, this.getContractsCallback);
   },
   methods: {
     onchange(selectedRowKeys, selectedRows) {
       this.selectedRows = selectedRows;
+      this.selectedRowKeys = selectedRowKeys;
     },
     onSelect() {
       if (this.selectedRows.length == 0) {
         this.$message.info("至少选择一项");
+      } else {
+        var data = {};
+        data.idList = this.selectedRowKeys;
+        ContractData.submitContracts(data, this.submitCallback);
+      }
+    },
+    getContractsCallback(data) {
+      if (data.code == 0) {
+        this.dataSource = data.data;
+      }
+    },
+    submitCallback(data) {
+      if (data.code == 0) {
+        ContractData.getContracts(1, this.getContractsCallback);
       }
     }
   }

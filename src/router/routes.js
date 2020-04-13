@@ -14,7 +14,8 @@ import PlanUpdate from '../pages/plan/PlanUpdate'
 import ContractManage from '../pages/contract/ContractManage'
 import ContractView from '../pages/contract/ContractView'
 import ContractAudit from '../pages/contract/ContractAudit'
-import ContractForm from '../pages/contract/ContractForm'
+import ContractAdd from '../pages/contract/ContractAdd'
+import ContractUpdate from '../pages/contract/ContractUpdate'
 import ContractInfo from '../pages/contract/ContractInfo'
 import PageView from '../layout/PageView'
 import WelcomeView from '../layout/WelcomeView'
@@ -137,9 +138,9 @@ const router = new VueRouter({
               name: '查看合同',
               component: ContractView
             }, {
-              path: '/contract/contractForm/:id',
-              name: '合同表格',
-              component: ContractForm
+              path: '/contract/contractUpdate:id',
+              name: '合同更新',
+              component: ContractUpdate
             }, {
               path: '/contract/contractInfo/:id',
               name: '合同详情',
@@ -147,7 +148,7 @@ const router = new VueRouter({
             }, {
               path: '/contract/contractAdd',
               name: '新增合同',
-              component: ContractForm
+              component: ContractAdd
             }
           ]
         }, {
