@@ -40,7 +40,7 @@ const columns = [
   },
   {
     title: "占用金额",
-    dataIndex: "occupied",
+    dataIndex: "occupyMoney",
     customRender: text => text + "元"
   },
   {
@@ -49,7 +49,8 @@ const columns = [
   },
   {
     title: "部门",
-    dataIndex: "work.user.department"
+    dataIndex: "work.user.department",
+    customRender: (text, record) => Const.getDepartment(record.work.department)
   },
   {
     title: "负责人",
@@ -63,6 +64,7 @@ const columns = [
   }
 ];
 import BudgetData from "../../dao/budgetDAO";
+import Const from "../../common/const";
 
 export default {
   data() {
@@ -73,7 +75,14 @@ export default {
     };
   },
   mounted() {
-    this.dataSource = BudgetData.getBudgets();
+    BudgetData.getBudgets(3, this.fetchDataCallback);
+  },
+  methods: {
+    fetchDataCallback(data) {
+      if (data.code == 0) {
+        this.dataSource = data.data;
+      }
+    }
   }
 };
 </script>

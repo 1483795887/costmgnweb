@@ -1,25 +1,25 @@
 <template>
   <div class="table-padding">
     <div class="table-operators">
-      <router-link :to="{name:'新增预算',params:{desc:'新增预算'}}">
+      <router-link :to="{name:'新增预算'}">
         <a-button type="primary">新增</a-button>
       </router-link>
       <a-button
         :style="{ marginLeft: '24px' }"
-        @click="onSelect"
+        @click="onSumbit"
       >提交</a-button>
     </div>
     <standard-table
       :columns="columns"
       :dataSource="dataSource"
-      :rowKey="record => record.id"
+      :rowKey="record => record.work.id"
       :selectedRows="selectedRows"
       @change="onchange"
     >
       <router-link
         slot="budgetId"
         slot-scope="{text,record}"
-        :to="{name:'预算表格',params:{desc:'维护预算',id:record.id}}"
+        :to="{name:'预算更新',params:{id:record.id}}"
       >{{(Array(8).join('0') + record.id).slice(-8)}}</router-link>
     </standard-table>
   </div>
@@ -27,6 +27,8 @@
 
 <script>
 import StandardTable from "../../components/table/StandardTable";
+import Const from "../../common/const";
+import BudgetData from "../../dao/budgetDAO";
 
 const columns = [
   {
@@ -57,7 +59,8 @@ const columns = [
   },
   {
     title: "状态",
-    dataIndex: "work.status"
+    dataIndex: "work.status",
+    customRender: (text, record) => Const.getStatus(record.work.status)
   },
   {
     title: "提交时间",
@@ -66,8 +69,6 @@ const columns = [
     sorter: (a, b) => a.date > b.date
   }
 ];
-
-import BudgetData from "../../dao/budgetDAO";
 
 export default {
   components: {
@@ -78,19 +79,35 @@ export default {
       desc: "维护正在进行的预算",
       columns: columns,
       dataSource: [],
-      selectedRows: []
+      selectedRows: [],
+      selectedRowKeys: []
     };
   },
   mounted() {
-    this.dataSource = BudgetData.getBudgets();
+    BudgetData.getBudgets(1, this.getBudgetsCallback);
   },
   methods: {
     onchange(selectedRowKeys, selectedRows) {
       this.selectedRows = selectedRows;
+      this.selectedRowKeys = selectedRowKeys;
     },
-    onSelect() {
+    onSumbit() {
       if (this.selectedRows.length == 0) {
         this.$message.info("至少选择一项");
+      } else {
+        var data = {};
+        data.idList = this.selectedRowKeys;
+        BudgetData.submitBudgets(data, this.onRefreshData);
+      }
+    },
+    getBudgetsCallback(data) {
+      if (data.code == 0) {
+        this.dataSource = data.data;
+      }
+    },
+    onRefreshData(data) {
+      if (data.code == 0) {
+        BudgetData.getBudgets(1, this.getBudgetsCallback);
       }
     }
   }

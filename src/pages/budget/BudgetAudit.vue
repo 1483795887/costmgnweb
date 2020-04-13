@@ -15,14 +15,15 @@
       :dataSource="dataSource"
       :selectedRows="selectedRows"
       @change="onchange"
-      :rowKey="record => record.id"
+      :rowKey="record => record.work.id"
     />
   </div>
 </template>
 
 <script>
 import StandardTable from "../../components/table/StandardTable";
-import BudgetData from "../../dao/budgetDAO";
+import BudgetDAO from "../../dao/budgetDAO";
+import Const from "../../common/const";
 
 const columns = [
   {
@@ -52,16 +53,9 @@ const columns = [
     dataIndex: "type"
   },
   {
-    title: "状态",
-    dataIndex: "work.status"
-  },
-  {
     title: "部门",
-    dataIndex: "work.user.department"
-  },
-  {
-    title: "负责人",
-    dataIndex: "work.user.name"
+    dataIndex: "work.user.department",
+    customRender: (text, record) => Const.getDepartment(record.work.department)
   },
   {
     title: "提交时间",
@@ -77,27 +71,50 @@ export default {
   },
   data() {
     return {
-      desc: "审计正在进行的合同",
+      desc: "审计预算",
       columns: columns,
       dataSource: [],
-      selectedRows: []
+      selectedRows: [],
+      selectedRowKeys: []
     };
   },
   mounted() {
-    this.dataSource = BudgetData.getBudgets();
+    this.fetchData();
   },
   methods: {
     onchange(selectedRowKeys, selectedRows) {
       this.selectedRows = selectedRows;
+      this.selectedRowKeys = selectedRowKeys;
     },
     onApprove() {
       if (this.selectedRows.length == 0) {
         this.$message.info("至少选择一项");
+      } else {
+        var data = {};
+        data.idList = this.selectedRowKeys;
+        BudgetDAO.approveBudgets(data, this.onRefreshData);
       }
     },
     onRefuse() {
       if (this.selectedRows.length == 0) {
         this.$message.info("至少选择一项");
+      } else {
+        var data = {};
+        data.idList = this.selectedRowKeys;
+        BudgetDAO.refuseBudgets(data, this.onRefreshData);
+      }
+    },
+    fetchData() {
+      BudgetDAO.getBudgets(2, this.fetchDataCallback);
+    },
+    fetchDataCallback(data) {
+      if (data.code == 0) {
+        this.dataSource = data.data;
+      }
+    },
+    onRefreshData(data) {
+      if (data.code == 0) {
+        this.fetchData();
       }
     }
   }

@@ -27,11 +27,11 @@
       />
     </a-form-item>
     <a-form-item label="合同金额">
-      <a-input
-        prefix="￥"
-        suffix="RMB"
-        v-decorator="['money', { rules: [{ required: true, message: '请输入合同金额!' }]}]"
-      />
+      <a-input-number
+        precision=2
+        max=99999999.99
+        v-decorator="['money', { rules: [{ required: true, message: '请输入金额!' },{validator:moneyValidator}]}]"
+      />元
     </a-form-item>
     <a-form-item label="付款方式">
       <a-select v-decorator="['payMethod', { rules: [{ required: true, message: '请选择付款方式!' }]}]">
@@ -210,6 +210,11 @@ export default {
       if (value && value.length > 200) {
         callback("长度过长");
       } else callback();
+    },
+    getBudgetsCallback(data) {
+      if (data.code == 0) {
+        this.dataSource = data.data;
+      }
     }
   }
 };

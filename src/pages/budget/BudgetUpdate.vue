@@ -13,11 +13,11 @@
       />
     </a-form-item>
     <a-form-item label="金额">
-      <a-input
-        prefix="￥"
-        suffix="RMB"
-        v-decorator="['money', { rules: [{ required: true, message: '请输入金额!' }]}]"
-      />
+      <a-input-number
+        precision=2
+        max=99999999.99
+        v-decorator="['money', { rules: [{ required: true, message: '请输入金额!' },{validator:moneyValidator}]}]"
+      />元
     </a-form-item>
     <a-form-item label="用途">
       <a-input v-decorator="['type', { rules: [{ required: true, message: '请输入用途!' },{validator:typeValidator}] }]" />
@@ -103,6 +103,11 @@ export default {
       if (value && value.length > 20) {
         callback("长度过长");
       } else callback();
+    },
+    getBudgetsCallback(data) {
+      if (data.code == 0) {
+        this.dataSource = data.data;
+      }
     }
   }
 };

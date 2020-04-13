@@ -2,7 +2,7 @@ import {
   AutoComplete, Breadcrumb, Card,
   Checkbox, Form, Icon, Input, Menu, Select, Layout, Dropdown,
   Avatar, Button, Badge, Tooltip, PageHeader, Descriptions, List,
-  Table, Alert, DatePicker, Result, Cascader, message
+  Table, Alert, DatePicker, Result, Cascader, message, InputNumber
 } from 'ant-design-vue';
 import Vue from 'vue';
 import App from './App.vue';
@@ -13,6 +13,7 @@ import './layout/page.css';
 
 Vue.use(Form);
 Vue.use(Input);
+Vue.use(InputNumber);
 Vue.use(Card);
 Vue.use(Icon);
 Vue.use(Select);
