@@ -32,6 +32,8 @@
   </a-form>
 </template>
 <script>
+import UserDAO from "../../dao/userDAO";
+
 export default {
   beforeCreate() {
     this.form = this.$form.createForm(this, { name: "plan-form" });
@@ -41,7 +43,11 @@ export default {
       e.preventDefault();
       this.form.validateFields((err, values) => {
         if (!err) {
-          console.log(values);
+          var data = {};
+          data.id = this.$store.state.account.user.id;
+          data.password = values.oriPass;
+          data.newPassword = values.newPass;
+          UserDAO.updatePassword(data, this.updatePasswordCallback);
         }
       });
     },
@@ -56,6 +62,15 @@ export default {
       if (value && value != this.form.getFieldValue("newPass")) {
         callback("两次密码不一样");
       } else callback();
+    },
+    updatePasswordCallback(data) {
+      if (data.code == 0) {
+        this.$store.commit("account/setuser", null);
+        sessionStorage.removeItem("user");
+        this.$router.push({ name: "登录页" });
+      } else {
+        this.$message.info(data.error);
+      }
     }
   }
 };
