@@ -29,7 +29,8 @@ import BudgetCost from '../pages/budget/BudgetCost'
 import BudgetOccupy from '../pages/budget/BudgetOccupy'
 
 import CostView from '../pages/cost/CostView'
-import CostForm from '../pages/cost/CostForm'
+import CostAdd from '../pages/cost/CostAdd'
+import CostUpdate from '../pages/cost/CostUpdate'
 import CostAudit from '../pages/cost/CostAudit'
 import CostManage from '../pages/cost/CostManage'
 
@@ -205,13 +206,13 @@ const router = new VueRouter({
               name: '费用维护',
               component: CostManage
             }, {
-              path: '/cost/costForm/:id',
-              name: '费用表格',
-              component: CostForm
+              path: '/cost/costCostAdd/:id',
+              name: '费用更新',
+              component: CostUpdate
             }, {
               path: '/cost/costAdd',
               name: '新增费用',
-              component: CostForm
+              component: CostAdd
             }
           ]
         }

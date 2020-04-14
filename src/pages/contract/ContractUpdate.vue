@@ -115,11 +115,12 @@ export default {
       user: {},
       date: "",
       plans: [],
-      department: ""
+      department: "",
+      contract: {}
     };
   },
   mounted() {
-    this.plans = PlanDAO.getDummyPlans();
+    PlanDAO.getPlans(3, this.getPlansCallback);
     ContractDAO.getContract(this.$route.params.id, this.getContractCallback);
   },
   beforeCreate() {
@@ -128,9 +129,24 @@ export default {
   methods: {
     handleSubmit(e) {
       e.preventDefault();
-      this.form.validateFields(err => {
+      this.form.validateFields((err, values) => {
         if (!err) {
-          err;
+          this.contract.contractNo = values.no;
+          this.contract.planId = values.planId;
+          this.contract.contractDate = values.contractDate;
+          this.contract.money = values.money;
+          this.contract.title = values.title;
+          this.contract.payMethod = values.payMethod;
+          this.contract.payRequest = values.payRequest;
+          this.contract.lastMonth = values.lastMonth;
+          this.contract.company = values.company;
+          this.contract.legalPerson = values.legalPerson;
+          this.contract.description = values.description;
+
+          ContractDAO.updateContract(
+            this.contract,
+            this.updateContractCallback
+          );
         }
       });
     },
@@ -151,6 +167,7 @@ export default {
         this.company = contract.company;
         this.legalPerson = contract.legalPerson;
         this.description = contract.description;
+        this.contract = contract;
 
         this.form.setFieldsValue({
           no: this.no,
@@ -167,11 +184,13 @@ export default {
         });
       }
     },
+    getPlansCallback(data) {
+      if (data.code) {
+        this.plans = data.data;
+      }
+    },
     getCurrentUser() {
       return this.$store.state.account.user;
-    },
-    getContract(id) {
-      return ContractDAO.getContract(id);
     },
     onRequestChange(value) {
       this.installment = value === contractData.payRequests.PAY_REQUEST_INSTALL;
@@ -196,11 +215,6 @@ export default {
         callback("长度过长");
       } else callback();
     },
-    ttitleValidator(rule, value, callback) {
-      if (value && value.length > 10) {
-        callback("长度过长");
-      } else callback();
-    },
     descriptionValidator(rule, value, callback) {
       if (value && value.length > 200) {
         callback("长度过长");
@@ -209,6 +223,16 @@ export default {
     getBudgetsCallback(data) {
       if (data.code == 0) {
         this.dataSource = data.data;
+      }
+    },
+    moneyValidator(rule, value, callback) {
+      if (value <= 0) {
+        callback("金额必须为正");
+      } else callback();
+    },
+    updateContractCallback(data) {
+      if (data.code == 0) {
+        this.$router.go(-1);
       }
     }
   }

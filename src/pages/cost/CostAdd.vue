@@ -5,13 +5,6 @@
     :wrapper-col="{ span: 12 }"
     @submit="handleSubmit"
   >
-    <a-form-item label="预算年月">
-      <a-month-picker
-        @change="onChangeYearMonth"
-        placeholder="选择年月"
-        v-decorator="['yearmonth', { rules: [{ required: true, message: '请选择预算年月!' }]}]"
-      />
-    </a-form-item>
     <a-form-item label="金额">
       <a-input-number
         precision=2
@@ -40,48 +33,50 @@
 
 <script>
 import moment from "moment";
-import BudgetDAO from "../../dao/budgetDAO";
 import Const from "../../common/const";
+import costDAO from "../../dao/costDAO";
 
 export default {
   data() {
     return {
-      desc: "预算更新",
+      desc: "报销",
       needToBack: true,
       dateFormat: "YYYY-MM-DD",
-      yearmonth: null,
       money: 0,
       type: "",
       date: "",
-      budget: {},
       user: {},
       department: ""
     };
   },
   mounted() {
-    BudgetDAO.getBudget(this.$route.params.id, this.getBudgetCallback);
+    this.user = this.getCurrentUser();
+    this.date = moment().format(this.dateFormat);
+    this.department = Const.getDepartment(this.user.department);
+    this.$nextTick(() => {
+      this.form.setFieldsValue({
+        money: this.money,
+        type: this.type
+      });
+    });
   },
   beforeCreate() {
-    this.form = this.$form.createForm(this, { name: "budget-form" });
+    this.form = this.$form.createForm(this, { name: "cost-form" });
   },
   methods: {
     handleSubmit(e) {
       e.preventDefault();
       this.form.validateFields((err, values) => {
         if (!err) {
-          this.budget.year = values.yearmonth.year();
-          this.budget.month = values.yearmonth.month();
-          this.budget.money = values.money;
-          this.budget.type = values.type;
-          BudgetDAO.updateBudget(this.budget, this.updateCallback);
+          var cost = {};
+          cost.money = values.money;
+          cost.type = values.type;
+          costDAO.addCost(cost, this.addCostCallback);
         }
       });
     },
     getCurrentUser() {
       return this.$store.state.account.user;
-    },
-    onChangeYearMonth(date, dateString) {
-      console.log(date, dateString);
     },
     typeValidator(rule, value, callback) {
       if (value && value.length > 20) {
@@ -93,28 +88,7 @@ export default {
         callback("金额必须为正");
       } else callback();
     },
-    getBudgetCallback(data) {
-      if (data.code == 0) {
-        var budget = data.data;
-        this.budget = budget;
-        this.yearmonth = moment()
-          .year(budget.year)
-          .month(budget.month);
-        this.money = budget.money;
-        this.type = budget.type;
-        this.user = budget.work.user;
-        this.date = budget.work.date;
-        this.department = Const.getDepartment(this.user.department);
-        this.$nextTick(() => {
-          this.form.setFieldsValue({
-            yearmonth: this.yearmonth,
-            money: this.money,
-            type: this.type
-          });
-        });
-      }
-    },
-    updateCallback(data) {
+    addCostCallback(data) {
       if (data.code == 0) {
         this.$router.go(-1);
       }

@@ -8,6 +8,8 @@ export default {
     post('/api/budget/getBudget', id, callback);
   }, addBudget(budget, callback) {
     post('/api/budget/addBudget', budget, callback);
+  }, updateBudget(value, callback) {
+    post('/api/budget/updateBudget', value, callback);
   }, submitBudgets(idList, callback) {
     post('/api/budget/submitBudget', idList, callback);
   }, approveBudgets(value, callback) {

@@ -58,31 +58,53 @@ export default {
       columns: columns,
       dataSource: [],
       selectedRows: [],
-      selectedIds: []
+      selectedRowKeys: []
     };
   },
   mounted() {
-    this.dataSource = CostDAO.getCosts();
+    this.fetchData();
   },
   methods: {
     onchange(selectedRowKeys, selectedRows) {
       this.selectedRows = selectedRows;
-      this.selectedIds = this.selectedRows.map(obj => obj.id);
+      this.selectedRowKeys = selectedRowKeys;
     },
     onOccupy() {
-      if (this.selectedIds.length == 0) {
+      if (this.selectedRows.length == 0) {
         this.$message.info("至少选择一项");
       } else {
+        var totalCost = 0;
+        for (var i = 0; i < this.selectedRowKeys.length; i++) {
+          totalCost += this.selectedRows[i].money;
+        }
         this.$router.push({
           name: "预算占用",
-          query: { ids: this.selectedIds }
+          query: { ids: this.selectedRowKeys, occupied: totalCost }
         });
       }
     },
     onRefuse() {
-      if (this.selectedIds.length == 0) {
+      if (this.selectedRows.length == 0) {
         this.$message.info("至少选择一项");
+      } else {
+        var data = {};
+        data.idList = this.selectedRowKeys;
+        console.log(data);
+        CostDAO.refuseCosts(data, this.onRefreshData);
       }
+    },
+    getCostsCallback(data) {
+      if (data.code == 0) {
+        this.dataSource = data.data;
+      }
+    },
+    onRefreshData(data) {
+      if (data.code == 0) {
+        this.fetchData();
+      }
+    },
+    fetchData() {
+      CostDAO.getCosts(2, this.getCostsCallback);
     }
   }
 };

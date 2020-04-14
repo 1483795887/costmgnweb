@@ -14,12 +14,12 @@
       @change="onchange"
       :columns="columns"
       :dataSource="dataSource"
-      :rowKey="record => record.id"
+      :rowKey="record => record.work.id"
     >
       <router-link
         slot="costId"
         slot-scope="{text,record}"
-        :to="{name:'预算表格',params:{desc:'维护预算',id:record.id}}"
+        :to="{name:'费用更新',params:{id:record.id}}"
       >{{(Array(8).join("0") + record.id).slice(-8)}}</router-link>
     </standard-table>
   </div>
@@ -27,6 +27,7 @@
 
 <script>
 import StandardTable from "../../components/table/StandardTable";
+import Const from "../../common/const";
 
 const columns = [
   {
@@ -51,7 +52,8 @@ const columns = [
   },
   {
     title: "状态",
-    dataIndex: "work.status"
+    dataIndex: "work.status",
+    customRender: (text, record) => Const.getStatus(record.work.status)
   }
 ];
 import CostDAO from "../../dao/costDAO";
@@ -65,19 +67,35 @@ export default {
       desc: "查看预算列表",
       columns: columns,
       dataSource: [],
-      selectedRows: []
+      selectedRows: [],
+      selectedRowKeys: []
     };
   },
   mounted() {
-    this.dataSource = CostDAO.getCosts();
+    CostDAO.getCosts(1, this.getCostsCallback);
   },
   methods: {
     onchange(selectedRowKeys, selectedRows) {
       this.selectedRows = selectedRows;
+      this.selectedRowKeys = selectedRowKeys;
     },
     onSelect() {
       if (this.selectedRows.length == 0) {
         this.$message.info("至少选择一项");
+      } else {
+        var data = {};
+        data.idList = this.selectedRowKeys;
+        CostDAO.submitCosts(data, this.onRefreshData);
+      }
+    },
+    getCostsCallback(data) {
+      if (data.code == 0) {
+        this.dataSource = data.data;
+      }
+    },
+    onRefreshData(data) {
+      if (data.code == 0) {
+        CostDAO.getCosts(1, this.getCostsCallback);
       }
     }
   }

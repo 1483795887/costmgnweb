@@ -3,7 +3,7 @@
     <a-table
       :columns="columns"
       :dataSource="dataSource"
-      :rowKey="record => record.id"
+      :rowKey="record => record.work.id"
     />
   </div>
 </template>
@@ -26,7 +26,8 @@ const columns = [
   },
   {
     title: "部门",
-    dataIndex: "work.user.department"
+    dataIndex: "work.user.department",
+    customRender: (text, record) => Const.getDepartment(record.work.department)
   },
   {
     title: "负责人",
@@ -37,14 +38,10 @@ const columns = [
     dataIndex: "work.date",
     defaultSortOrder: "descend",
     sorter: (a, b) => a.date > b.date
-  },
-  {
-    title: "状态",
-    dataIndex: "work.status"
   }
 ];
 import CostDAO from "../../dao/costDAO";
-
+import Const from "../../common/const";
 export default {
   data() {
     return {
@@ -54,7 +51,14 @@ export default {
     };
   },
   mounted() {
-    this.dataSource = CostDAO.getCosts();
+    CostDAO.getCosts(3, this.getCostsCallback);
+  },
+  methods: {
+    getCostsCallback(data) {
+      if (data.code == 0) {
+        this.dataSource = data.data;
+      }
+    }
   }
 };
 </script>

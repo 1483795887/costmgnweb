@@ -9,10 +9,10 @@
     <a-form-item label="选择预算">
       <a-select v-decorator="['budget', { rules: [{ required: true, message: '请选择预算!' }]}]">
         <a-select-option
-          v-for="(item,key) in budgets"
-          :key="key"
-          :value="item"
-        >{{item.id+":"+item.type + ' 剩余 ' + (item.money - item.occupied) + '元'}}</a-select-option>
+          v-for="(item,index) in budgets"
+          :key="index"
+          :value="index"
+        >{{item.id+":"+item.type + ' 剩余 ' + (item.money - item.occupyMoney) + '元'}}</a-select-option>
       </a-select>
     </a-form-item>
     <a-form-item :wrapper-col="{ span: 12, offset: 5 }">
@@ -38,7 +38,6 @@ export default {
       desc: "占用预算",
       needToBack: true,
       budgets: [],
-      costs: [],
       totalNeed: 0
     };
   },
@@ -46,20 +45,35 @@ export default {
     this.form = this.$form.createForm(this, { name: "occupy-form" });
   },
   mounted() {
-    this.budgets = BudgetDAO.getBudgets();
-    this.costs = CostDAO.getCostsByIds(this.$route.query.ids);
-    var count = 0;
-    this.costs.map(obj => (count += obj.money));
-    this.totalNeed = count;
+    BudgetDAO.getBudgets(3, this.getBudgetsCallback);
+    this.totalNeed = this.$route.query.occupied;
   },
   methods: {
     handleSubmit(e) {
       e.preventDefault();
-      this.form.validateFields(err => {
+      this.form.validateFields((err, values) => {
         if (!err) {
-          err;
+          var budget = this.budgets[values.budget];
+          if (budget.money - budget.occupyMoney < this.totalNeed) {
+            this.$message.info("该预算剩余金额不足");
+          } else {
+            var data = {};
+            data.receiptIdList = this.$route.query.ids;
+            data.budgetId = budget.id;
+            CostDAO.approveCosts(data, this.occupyMoneyCallback);
+          }
         }
       });
+    },
+    getBudgetsCallback(data) {
+      if (data.code == 0) {
+        this.budgets = data.data;
+      }
+    },
+    occupyMoneyCallback(data) {
+      if (data.code == 0) {
+        this.$router.go(-1);
+      }
     }
   }
 };

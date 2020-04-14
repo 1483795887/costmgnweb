@@ -201,11 +201,6 @@ export default {
         callback("长度过长");
       } else callback();
     },
-    ttitleValidator(rule, value, callback) {
-      if (value && value.length > 10) {
-        callback("长度过长");
-      } else callback();
-    },
     descriptionValidator(rule, value, callback) {
       if (value && value.length > 200) {
         callback("长度过长");
@@ -215,6 +210,11 @@ export default {
       if (data.code == 0) {
         this.dataSource = data.data;
       }
+    },
+    moneyValidator(rule, value, callback) {
+      if (value <= 0) {
+        callback("金额必须为正");
+      } else callback();
     }
   }
 };

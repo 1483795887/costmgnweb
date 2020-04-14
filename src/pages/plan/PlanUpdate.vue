@@ -43,7 +43,6 @@ export default {
     };
   },
   mounted() {
-    this.desc = this.$route.params.desc;
     PlanDAO.getPlan(this.$route.params.id, this.getPlanCallback);
   },
   beforeCreate() {

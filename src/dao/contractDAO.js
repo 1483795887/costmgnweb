@@ -8,6 +8,8 @@ export default {
     post('/api/contract/getContract', id, callback);
   }, addContract(contract, callback) {
     post('/api/contract/addContract', contract, callback);
+  }, updateContract(value, callback) {
+    post('/api/contract/updateContract', value, callback);
   }, submitContracts(idList, callback) {
     post('/api/contract/submitContract', idList, callback);
   }, approveContracts(value, callback) {

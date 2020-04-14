@@ -5,7 +5,7 @@
         type="info"
         :show-icon="true"
       >
-        <div slot="message">{{budget.year+'年度 '+budget.month+'月预算，共'+budget.money+'元，已用'+budget.occupied+'元'}}</div>
+        <div slot="message">{{budget.year+'年度 '+budget.month+'月预算，共'+budget.money+'元，已用'+budget.occupyMoney+'元'}}</div>
       </a-alert>
     </div>
     <a-table
@@ -34,7 +34,8 @@ const columns = [
   },
   {
     title: "部门",
-    dataIndex: "work.user.department"
+    dataIndex: "work.user.department",
+    customRender: (text, record) => Const.getDepartment(record.work.department)
   },
   {
     title: "负责人",
@@ -49,6 +50,7 @@ const columns = [
 ];
 import CostDAO from "../../dao/costDAO";
 import BudgetDAO from "../../dao/budgetDAO";
+import Const from "../../common/const";
 
 export default {
   data() {
@@ -61,8 +63,20 @@ export default {
     };
   },
   mounted() {
-    this.dataSource = CostDAO.getCosts(this.$route.params.id);
-    this.budget = BudgetDAO.getBudget(this.$route.params.id);
+    CostDAO.getCostsByBudget(this.$route.params.id, this.getCostsCallback);
+    BudgetDAO.getBudget(this.$route.params.id, this.getBudgetCallback);
+  },
+  methods: {
+    getCostsCallback(data) {
+      if (data.code == 0) {
+        this.dataSource = data.data;
+      }
+    },
+    getBudgetCallback(data) {
+      if (data.code == 0) {
+        this.budget = data.data;
+      }
+    }
   }
 };
 </script>

@@ -22,6 +22,8 @@ export default {
                 return "未通过";
             case 3:
                 return "被退回";
+            case 4:
+                return "已通过";
         }
     }
 }
