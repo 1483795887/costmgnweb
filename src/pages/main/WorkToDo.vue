@@ -9,26 +9,8 @@
 </template>
 
 <script>
-const works = [
-  {
-    id: 1,
-    title: "方案-采购原料",
-    date: "2020-01-03",
-    user: {
-      name: "张三",
-      department: "生产"
-    }
-  },
-  {
-    id: 3,
-    title: "费用-报销",
-    date: "2020-01-05",
-    user: {
-      name: "李四",
-      department: "营销"
-    }
-  }
-];
+import Const from "../../common/const";
+import WorkDAO from "../../dao/workDAO";
 
 const columns = [
   {
@@ -36,8 +18,23 @@ const columns = [
     dataIndex: "id"
   },
   {
-    title: "描述",
-    dataIndex: "title"
+    title: "类型",
+    dataIndex: "type",
+    customRender: (text, record) => Const.getType(record.type)
+  },
+  {
+    title: "状态",
+    dataIndex: "status",
+    customRender: (text, record) => Const.getStatus(record.status)
+  },
+  {
+    title: "部门",
+    dataIndex: "user.department",
+    customRender: (text, record) => Const.getDepartment(record.department)
+  },
+  {
+    title: "负责人",
+    dataIndex: "user.name"
   },
   {
     title: "提交时间",
@@ -50,10 +47,20 @@ const columns = [
 export default {
   data() {
     return {
-      dataSource: works,
+      dataSource: [],
       columns: columns,
       desc: "待办工作"
     };
+  },
+  methods: {
+    getToDoWorksCallback(data) {
+      if (data.code == 0) {
+        this.dataSource = data.data;
+      }
+    }
+  },
+  mounted() {
+    WorkDAO.getToDoWorks(this.getToDoWorksCallback);
   }
 };
 </script>

@@ -25,5 +25,16 @@ export default {
             case 4:
                 return "已通过";
         }
+    }, getType(no) {
+        switch (no) {
+            case 0:
+                return "方案";
+            case 1:
+                return "合同";
+            case 2:
+                return "预算";
+            case 3:
+                return "费用";
+        }
     }
 }
