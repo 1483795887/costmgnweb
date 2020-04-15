@@ -1,5 +1,8 @@
 <template>
-  <a-layout-sider width="200" style="background: #fff">
+  <a-layout-sider
+    width="200"
+    style="background: #fff"
+  >
     <div class="logo">费用控制系统</div>
     <a-menu
       mode="inline"
@@ -8,88 +11,34 @@
       :defaultSelectedKeys="selectedKeys"
       :style="{ height: '100%', borderRight: 0 }"
     >
-      <a-sub-menu key="work">
-        <span slot="title">
-          <a-icon type="home" />工作
-        </span>
-        <a-menu-item key="workCur">
-          <router-link :to="{name:'当前事务'}">事务状态</router-link>
-        </a-menu-item>
-        <a-menu-item key="workToDo">
-          <router-link :to="{name:'待办事务'}">待办事务</router-link>
-        </a-menu-item>
-      </a-sub-menu>
-
-      <a-sub-menu key="plan">
-        <span slot="title">
-          <a-icon type="bulb" />方案
-        </span>
-        <a-menu-item key="planManage">
-          <router-link :to="{name:'方案维护'}">方案维护</router-link>
-        </a-menu-item>
-        <a-menu-item key="planAudit">
-          <router-link :to="{name:'方案审计'}">方案审计</router-link>
-        </a-menu-item>
-        <a-menu-item key="planView">
-          <router-link :to="{name:'查看方案'}">查看方案</router-link>
-        </a-menu-item>
-      </a-sub-menu>
-      <a-sub-menu key="contract">
-        <span slot="title">
-          <a-icon type="solution" />合同
-        </span>
-        <a-menu-item key="contractManage">
-          <router-link :to="{name:'合同维护'}">合同维护</router-link>
-        </a-menu-item>
-        <a-menu-item key="contractAudit">
-          <router-link :to="{name:'合同审计'}">合同审计</router-link>
-        </a-menu-item>
-        <a-menu-item key="contractView">
-          <router-link :to="{name:'查看合同'}">查看合同</router-link>
-        </a-menu-item>
-      </a-sub-menu>
-      <a-sub-menu key="budget">
-        <span slot="title">
-          <a-icon type="account-book" />预算
-        </span>
-        <a-menu-item key="budgetManage">
-          <router-link :to="{name:'预算维护'}">预算维护</router-link>
-        </a-menu-item>
-        <a-menu-item key="budgetAudit">
-          <router-link :to="{name:'预算审计'}">预算审计</router-link>
-        </a-menu-item>
-        <a-menu-item key="budgetView">
-          <router-link :to="{name:'查看预算'}">查看预算</router-link>
-        </a-menu-item>
-      </a-sub-menu>
-      <a-sub-menu key="cost">
-        <span slot="title">
-          <a-icon type="transaction" />费用
-        </span>
-        <a-menu-item key="costAdd">
-          <router-link :to="{name:'费用维护'}">费用维护</router-link>
-        </a-menu-item>
-        <a-menu-item key="costAudit">
-          <router-link :to="{name:'费用审计'}">费用审计</router-link>
-        </a-menu-item>
-        <a-menu-item key="costView">
-          <router-link :to="{name:'查看费用'}">查看费用</router-link>
-        </a-menu-item>
-      </a-sub-menu>
-      <a-sub-menu key="user">
-        <span slot="title">
-          <a-icon type="idcard" />员工管理
-        </span>
-        <a-menu-item key="userList">
-          <router-link :to="{name:'员工列表'}">员工列表</router-link>
-        </a-menu-item>
-      </a-sub-menu>
+      <template v-for="item in menu">
+        <a-sub-menu :key="item.name">
+          <span slot="title">
+            <a-icon :type="item.icon" />{{item.title}}
+          </span>
+          <template v-for="subItem in item.children">
+            <a-menu-item :key="subItem.name">
+              <router-link :to="{name:subItem.to}">{{subItem.title}}</router-link>
+            </a-menu-item>
+          </template>
+        </a-sub-menu>
+      </template>
     </a-menu>
   </a-layout-sider>
 </template>
 
 <script>
+import Menu from "./Menu";
+
 export default {
+  data() {
+    return {
+      menu: []
+    };
+  },
+  mounted() {
+    this.menu = Menu.getMenu(this.$store.state.account.user);
+  },
   computed: {
     openKeys() {
       return this.$route.path.split("/").slice(1, -1);
