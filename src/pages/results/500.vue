@@ -1,13 +1,13 @@
 <template>
   <a-result
-    status="404"
-    title="404"
-    subTitle="页面不存在."
+    status="500"
+    title="500"
+    subTitle="抱歉，服务器发生了错误."
   >
     <template v-slot:extra>
       <a-button
         type="primary"
-        @click="$router.go(-1)"
+        @click="$routergo(-1)"
       >返回</a-button>
     </template>
   </a-result>

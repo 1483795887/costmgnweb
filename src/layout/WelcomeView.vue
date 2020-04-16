@@ -2,7 +2,6 @@
   <welcome-layout
     :user="user"
     :desc="desc"
-    :count="count"
   >
     <transition name="page-taggle">
       <router-view ref="workpage" />
@@ -15,8 +14,7 @@ import WelcomeLayout from "./WelcomeLayout";
 export default {
   data() {
     return {
-      desc: "",
-      count: 0
+      desc: ""
     };
   },
   components: { WelcomeLayout },
@@ -36,7 +34,6 @@ export default {
       const page = this.$refs.workpage;
       if (page) {
         this.desc = page.desc;
-        this.count = page.dataSource.length;
       }
     }
   }

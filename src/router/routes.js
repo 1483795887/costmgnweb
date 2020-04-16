@@ -38,6 +38,8 @@ import UserList from '../pages/user/UserList'
 import UserAdd from '../pages/user/UserAdd'
 
 import Result404 from '../pages/results/404'
+import NoPower from '../pages/results/noPower'
+import Result500 from '../pages/results/500'
 
 Vue.use(VueRouter);
 
@@ -82,10 +84,12 @@ const router = new VueRouter({
               name: '修改密码',
               component: UpdatePassword
             }, {
+              meta: { post: [2] },
               path: '/user/userList',
               name: '员工列表',
               component: UserList
             }, {
+              meta: { post: [2] },
               path: '/user/userAdd',
               name: '增加员工',
               component: UserAdd
@@ -97,10 +101,12 @@ const router = new VueRouter({
           component: PageView,
           children: [
             {
+              meta: { post: [0] },
               path: '/plan/planManage',
               name: '方案维护',
               component: PlanManage
             }, {
+              meta: { post: [1] },
               path: '/plan/planAudit',
               name: '方案审计',
               component: PlanAudit
@@ -109,6 +115,7 @@ const router = new VueRouter({
               name: '查看方案',
               component: PlanView
             }, {
+              meta: { post: [0] },
               path: '/plan/planUpdate/:id',
               name: '方案更新',
               component: PlanUpdate
@@ -117,6 +124,7 @@ const router = new VueRouter({
               name: '方案详情',
               component: PlanInfo
             }, {
+              meta: { post: [0] },
               path: '/plan/planAdd',
               name: '方案新增',
               component: PlanAdd
@@ -128,10 +136,12 @@ const router = new VueRouter({
           component: PageView,
           children: [
             {
+              meta: { post: [0] },
               path: '/contract/contractManage',
               name: '合同维护',
               component: ContractManage
             }, {
+              meta: { post: [1] },
               path: '/contract/contractAudit',
               name: '合同审计',
               component: ContractAudit
@@ -140,6 +150,7 @@ const router = new VueRouter({
               name: '查看合同',
               component: ContractView
             }, {
+              meta: { post: [0] },
               path: '/contract/contractUpdate:id',
               name: '合同更新',
               component: ContractUpdate
@@ -148,6 +159,7 @@ const router = new VueRouter({
               name: '合同详情',
               component: ContractInfo
             }, {
+              meta: { post: [0] },
               path: '/contract/contractAdd',
               name: '新增合同',
               component: ContractAdd
@@ -159,30 +171,37 @@ const router = new VueRouter({
           component: PageView,
           children: [
             {
+              meta: { post: [1] },
               path: '/budget/budgetManage',
               name: '预算维护',
               component: BudgetManage
             }, {
+              meta: { post: [2] },
               path: '/budget/budgetAudit',
               name: '预算审计',
               component: BudgetAudit
             }, {
+              meta: { post: [1, 2] },
               path: '/budget/budgetView',
               name: '查看预算',
               component: BudgetView
             }, {
+              meta: { post: [1] },
               path: '/budget/budgetUpdate/:id',
               name: '预算更新',
               component: BudgetUpdate
             }, {
+              meta: { post: [1] },
               path: '/budget/budgetAdd',
               name: '新增预算',
               component: BudgetAdd
             }, {
+              meta: { post: [1, 2] },
               path: '/budget/budgetCost/:id',
               name: '预算费用',
               component: BudgetCost
             }, {
+              meta: { post: [1] },
               path: '/budget/budgetOccupy',
               name: '预算占用',
               component: BudgetOccupy
@@ -198,18 +217,22 @@ const router = new VueRouter({
               name: '查看费用',
               component: CostView
             }, {
+              meta: { post: [1] },
               path: '/cost/costAudit',
               name: '费用审计',
               component: CostAudit
             }, {
+              meta: { post: [0] },
               path: '/cost/costManage',
               name: '费用维护',
               component: CostManage
             }, {
+              pmeta: { post: [0] },
               path: '/cost/costCostAdd/:id',
               name: '费用更新',
               component: CostUpdate
             }, {
+              meta: { post: [0] },
               path: '/cost/costAdd',
               name: '新增费用',
               component: CostAdd
@@ -221,12 +244,20 @@ const router = new VueRouter({
       path: "/error/404",
       name: "404",
       component: Result404
+    }, {
+      path: "/error/noPower",
+      name: "noPower",
+      component: NoPower
+    }, {
+      path: "/error/500",
+      name: "500",
+      component: Result500
     }
   ]
 })
 
 router.beforeEach((to, from, next) => {
-  let user = sessionStorage.getItem("user");
+  let user = JSON.parse(sessionStorage.getItem("user"));
   if (to.path == '/login') {
     if (user) {
       next({ name: '主页' })
@@ -238,7 +269,12 @@ router.beforeEach((to, from, next) => {
       next({ name: '登录页' })
     } else {
       if (to.matched.length != 0) {
-        next();
+        //next();
+        if (to.meta.post != null && to.meta.post.indexOf(user.post) == -1) {
+          next({ name: 'noPower' });
+        } else {
+          next();
+        }
       } else {
         next({ name: '404' })
       }

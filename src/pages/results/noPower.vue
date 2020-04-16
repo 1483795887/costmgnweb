@@ -1,9 +1,5 @@
 <template>
-  <a-result
-    status="404"
-    title="404"
-    subTitle="页面不存在."
-  >
+  <a-result title="无权访问">
     <template v-slot:extra>
       <a-button
         type="primary"

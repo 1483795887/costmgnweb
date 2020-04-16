@@ -71,7 +71,7 @@ export default {
       if (data.code == 0) {
         var user = data.data;
         this.$store.commit("account/setuser", user);
-        sessionStorage.setItem("user", user);
+        sessionStorage.setItem("user", JSON.stringify(user));
         this.$router.push({ name: "主页" });
       } else {
         this.$message.info("账号或密码错误");
