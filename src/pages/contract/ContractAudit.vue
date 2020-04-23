@@ -16,6 +16,7 @@
       :selectedRows="selectedRows"
       @change="onchange"
       :rowKey="record => record.work.id"
+      ref="table"
     >
       <template
         slot="contractId"
@@ -103,6 +104,7 @@ export default {
       } else {
         var data = {};
         data.idList = this.selectedRowKeys;
+        this.$refs.table.clear();
         ContractData.approveContracts(data, this.onRefreshData);
       }
     },
@@ -112,6 +114,7 @@ export default {
       } else {
         var data = {};
         data.idList = this.selectedRowKeys;
+       this.$refs.table.clear();
         ContractData.refuseContracts(data, this.onRefreshData);
       }
     },

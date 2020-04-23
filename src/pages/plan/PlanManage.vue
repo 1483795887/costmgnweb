@@ -15,6 +15,7 @@
       :selectedRows="selectedRows"
       @change="onchange"
       :rowKey="record => record.work.id"
+      ref="table"
     >
       <router-link
         slot="planId"
@@ -80,6 +81,7 @@ export default {
       } else {
         var data = {};
         data.idList = this.selectedRowKeys;
+        this.$refs.table.clear();
         PlanData.submitPlans(data, this.submitCallback);
       }
     },

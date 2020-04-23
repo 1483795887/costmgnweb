@@ -49,5 +49,7 @@ export default {
     post('/api/user/login', { userid: userid, password: password }, callback);
   }, updatePassword(data, callback) {
     post('/api/user/updatePassword', data, callback);
+  }, removeUser(data, callback) {
+    post('/api/user/removeUser', data, callback);
   }
 }

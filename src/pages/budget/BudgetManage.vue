@@ -15,6 +15,7 @@
       :rowKey="record => record.work.id"
       :selectedRows="selectedRows"
       @change="onchange"
+      ref="table"
     >
       <router-link
         slot="budgetId"
@@ -97,6 +98,7 @@ export default {
       } else {
         var data = {};
         data.idList = this.selectedRowKeys;
+        this.$refs.table.clear();
         BudgetData.submitBudgets(data, this.onRefreshData);
       }
     },

@@ -15,6 +15,7 @@
       :selectedRows="selectedRows"
       @change="onchange"
       :rowKey="record => record.id"
+      ref="table"
     />
   </div>
 </template>
@@ -53,7 +54,8 @@ export default {
       desc: "查看、增加、删除员工",
       columns: columns,
       dataSource: [],
-      selectedRows: []
+      selectedRows: [],
+      selectedRowKeys: []
     };
   },
   mounted() {
@@ -62,11 +64,20 @@ export default {
   methods: {
     onchange(selectedRowKeys, selectedRows) {
       this.selectedRows = selectedRows;
+      this.selectedRowKeys = selectedRowKeys;
     },
     onSelect() {
       if (this.selectedRows.length == 0) {
         this.$message.info("至少选择一项");
+      } else {
+        var data = {};
+        data.idList = this.selectedRowKeys;
+        this.$refs.table.clear();
+        UserDAO.removeUser(data, this.removeUserCallback);
       }
+    },
+    removeUserCallback(data) {
+      if (data.code == 0) UserDAO.getUsers(this.getUserListCallback);
     },
     getUserListCallback(data) {
       if (data.code == 0) {

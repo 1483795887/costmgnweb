@@ -16,6 +16,7 @@
       :selectedRows="selectedRows"
       @change="onchange"
       :rowKey="record => record.work.id"
+      ref="table"
     >
       <template
         slot="planId"
@@ -87,6 +88,7 @@ export default {
       } else {
         var data = {};
         data.idList = this.selectedRowKeys;
+        this.$refs.table.clear();
         PlanData.approvePlans(data, this.onCallback);
       }
     },
@@ -96,6 +98,7 @@ export default {
       } else {
         var data = {};
         data.idList = this.selectedRowKeys;
+        this.$refs.table.clear();
         PlanData.refusePlans(data, this.onCallback);
       }
     },

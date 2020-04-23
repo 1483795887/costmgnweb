@@ -18,6 +18,7 @@
       :selectedRows="selectedRows"
       @change="onchange"
       :rowKey="record => record.id"
+      ref="table"
     />
   </div>
 </template>
@@ -77,6 +78,7 @@ export default {
         for (var i = 0; i < this.selectedRowKeys.length; i++) {
           totalCost += this.selectedRows[i].money;
         }
+        this.$refs.table.clear();
         this.$router.push({
           name: "预算占用",
           query: { ids: this.selectedRowKeys, occupied: totalCost }
@@ -89,7 +91,7 @@ export default {
       } else {
         var data = {};
         data.idList = this.selectedRowKeys;
-        console.log(data);
+        this.$refs.table.clear();
         CostDAO.refuseCosts(data, this.onRefreshData);
       }
     },

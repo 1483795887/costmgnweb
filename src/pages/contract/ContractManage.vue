@@ -15,6 +15,7 @@
       :columns="columns"
       :dataSource="dataSource"
       :rowKey="record => record.work.id"
+      ref="table"
     >
       <router-link
         slot="contractId"
@@ -96,6 +97,7 @@ export default {
       } else {
         var data = {};
         data.idList = this.selectedRowKeys;
+        this.$refs.table.clear();
         ContractData.submitContracts(data, this.submitCallback);
       }
     },

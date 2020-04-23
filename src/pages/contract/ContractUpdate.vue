@@ -14,8 +14,8 @@
     <a-form-item label="方案编号">
       <a-select v-decorator="['planId', { rules: [{ required: true, message: '请选择方案编号!' }]}]">
         <a-select-option
-          v-for="(item,key) in plans"
-          :key="key"
+          v-for="item in plans"
+          :key="item.id"
           :value="item.id"
         >{{item.id+":"+item.title}}</a-select-option>
       </a-select>
@@ -185,7 +185,7 @@ export default {
       }
     },
     getPlansCallback(data) {
-      if (data.code) {
+      if (data.code == 0) {
         this.plans = data.data;
       }
     },

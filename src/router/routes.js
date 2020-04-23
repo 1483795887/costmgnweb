@@ -151,7 +151,7 @@ const router = new VueRouter({
               component: ContractView
             }, {
               meta: { post: [0] },
-              path: '/contract/contractUpdate:id',
+              path: '/contract/contractUpdate/:id',
               name: '合同更新',
               component: ContractUpdate
             }, {

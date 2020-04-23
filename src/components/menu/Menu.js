@@ -120,7 +120,7 @@ export default {
                     to: '费用审计',
                     title: '费用审计'
                 }, {
-                    name: 'contractView',
+                    name: 'costView',
                     to: '查看费用',
                     title: '查看费用'
                 }

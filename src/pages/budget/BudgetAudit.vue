@@ -16,6 +16,7 @@
       :selectedRows="selectedRows"
       @change="onchange"
       :rowKey="record => record.work.id"
+      ref="table"
     />
   </div>
 </template>
@@ -92,6 +93,7 @@ export default {
       } else {
         var data = {};
         data.idList = this.selectedRowKeys;
+        this.$refs.table.clear();
         BudgetDAO.approveBudgets(data, this.onRefreshData);
       }
     },
@@ -101,6 +103,7 @@ export default {
       } else {
         var data = {};
         data.idList = this.selectedRowKeys;
+        this.$refs.table.clear();
         BudgetDAO.refuseBudgets(data, this.onRefreshData);
       }
     },

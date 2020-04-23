@@ -1,7 +1,10 @@
 <template>
   <div class="standard-table">
     <div class="alert">
-      <a-alert type="info" :show-icon="true">
+      <a-alert
+        type="info"
+        :show-icon="true"
+      >
         <div slot="message">已选择&nbsp;{{selectedRows.length}}&nbsp;项&nbsp;&nbsp;</div>
       </a-alert>
     </div>
@@ -14,8 +17,16 @@
       :pagination="pagination"
       :rowSelection="{selectedRowKeys: selectedRowKeys, onChange: updateSelect}"
     >
-      <template v-for="column in columnsCustom" :slot="column.customRender" slot-scope="text,record">
-        <slot :name="column.customRender" :text="text" :record="record"/>
+      <template
+        v-for="column in columnsCustom"
+        :slot="column.customRender"
+        slot-scope="text,record"
+      >
+        <slot
+          :name="column.customRender"
+          :text="text"
+          :record="record"
+        />
       </template>
     </a-table>
   </div>
@@ -61,16 +72,21 @@ export default {
         }
       });
       return totalList;
+    },
+    clear() {
+      this.selectedRowKeys = [];
     }
   },
   created() {
     this.needTotalList = this.initTotalList(this.columns);
   },
-  computed:{
-    columnsCustom(){
-      return this.columns.filter(item=>{
-        return item.scopedSlots
-      }).map(item=>item.scopedSlots)
+  computed: {
+    columnsCustom() {
+      return this.columns
+        .filter(item => {
+          return item.scopedSlots;
+        })
+        .map(item => item.scopedSlots);
     }
   },
   watch: {
