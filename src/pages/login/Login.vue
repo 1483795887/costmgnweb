@@ -70,9 +70,13 @@ export default {
     loginCallBack(data) {
       if (data.code == 0) {
         var user = data.data;
-        this.$store.commit("account/setuser", user);
-        sessionStorage.setItem("user", JSON.stringify(user));
-        this.$router.push({ name: "主页" });
+        if (!user.inpost) {
+          this.$message.info("该账号不存在");
+        } else {
+          this.$store.commit("account/setuser", user);
+          sessionStorage.setItem("user", JSON.stringify(user));
+          this.$router.push({ name: "主页" });
+        }
       } else {
         this.$message.info("账号或密码错误");
       }

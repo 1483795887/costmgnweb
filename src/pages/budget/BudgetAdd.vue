@@ -33,6 +33,7 @@
       <a-button
         html-type="submit"
         :style="{ marginLeft: '24px' }"
+        @click = "()=>$router.go(-1)"
       >取消</a-button>
     </a-form-item>
   </a-form>
@@ -80,7 +81,7 @@ export default {
         if (!err) {
           var budget = {};
           budget.year = values.yearmonth.year();
-          budget.month = values.yearmonth.month();
+          budget.month = values.yearmonth.month() + 1;
           budget.money = values.money;
           budget.type = values.type;
           BudgetDAO.addBudget(budget, this.addBudgetCallback);

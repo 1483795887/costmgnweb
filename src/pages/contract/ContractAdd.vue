@@ -80,6 +80,7 @@
       <a-button
         html-type="submit"
         :style="{ marginLeft: '24px' }"
+        @click = "()=>$router.go(-1)"
       >取消</a-button>
     </a-form-item>
   </a-form>

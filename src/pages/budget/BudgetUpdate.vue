@@ -3,7 +3,6 @@
     :form="form"
     :label-col="{ span: 5 }"
     :wrapper-col="{ span: 12 }"
-    @submit="handleSubmit"
   >
     <a-form-item label="预算年月">
       <a-month-picker
@@ -29,10 +28,12 @@
       <a-button
         type="primary"
         html-type="submit"
+        @click="handleSubmit"
       >保存</a-button>
       <a-button
         html-type="submit"
         :style="{ marginLeft: '24px' }"
+        @click = "()=>$router.go(-1)"
       >取消</a-button>
     </a-form-item>
   </a-form>
@@ -70,7 +71,7 @@ export default {
       this.form.validateFields((err, values) => {
         if (!err) {
           this.budget.year = values.yearmonth.year();
-          this.budget.month = values.yearmonth.month();
+          this.budget.month = values.yearmonth.month() + 1;
           this.budget.money = values.money;
           this.budget.type = values.type;
           BudgetDAO.updateBudget(this.budget, this.updateCallback);
@@ -99,7 +100,7 @@ export default {
         this.budget = budget;
         this.yearmonth = moment()
           .year(budget.year)
-          .month(budget.month);
+          .month(budget.month - 1);
         this.money = budget.money;
         this.type = budget.type;
         this.user = budget.work.user;

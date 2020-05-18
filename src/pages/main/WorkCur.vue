@@ -40,7 +40,7 @@ export default {
     return {
       dataSource: [],
       columns: columns,
-      desc: "等待审批"
+      desc: "正在进行的事项"
     };
   },
   methods: {

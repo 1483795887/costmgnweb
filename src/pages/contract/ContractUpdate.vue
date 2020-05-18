@@ -80,6 +80,7 @@
       <a-button
         html-type="submit"
         :style="{ marginLeft: '24px' }"
+        @click="()=>$router.go(-1)"
       >取消</a-button>
     </a-form-item>
   </a-form>
@@ -168,6 +169,7 @@ export default {
         this.legalPerson = contract.legalPerson;
         this.description = contract.description;
         this.contract = contract;
+        this.onRequestChange(this.payRequest);
 
         this.form.setFieldsValue({
           no: this.no,

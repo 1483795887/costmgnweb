@@ -19,7 +19,10 @@
         type="primary"
         html-type="submit"
       >确定</a-button>
-      <a-button :style="{ marginLeft: '24px' }">取消</a-button>
+      <a-button
+        :style="{ marginLeft: '24px' }"
+        @click="()=>$router.go(-1)"
+      >取消</a-button>
     </a-form-item>
   </a-form>
 </template>

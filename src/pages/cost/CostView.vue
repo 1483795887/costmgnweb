@@ -45,7 +45,7 @@ import Const from "../../common/const";
 export default {
   data() {
     return {
-      desc: "查看预算列表",
+      desc: "查看费用列表",
       columns: columns,
       dataSource: []
     };
